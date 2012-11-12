@@ -22,6 +22,7 @@ This is an early release version of the plugin. You should test it extensively b
 2. Upload `bpGallery` folder to the `/wp-content/plugins/` directory or use automatic installation from wp plugin panel
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. You can use the default settings select BP Gallery option in the admin screen to view and change them as required.
+5. The plugin creates a new profile group called BPGallery and a new profile field called "Donation Link". The user just needs to add a valid Paypal donation link for a donation icon to appear at the top of each gallery
 
 
 == Other Notes ==
@@ -45,13 +46,14 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 = 1.0 =
 * "First Release."
 
-
+= 1.1 = 
+* "Added gallery donations"
 == Upgrade Notice ==
 = 1.0 =
 First release
+= 1.1 =
+With this release users can now have a donation link and button appear on the galleries, by entering a valid Paypal doantion link into their profile.
 
 == Help Out! ==
 
-Here are a few ways you can help out (and encourage me to work on it =) ):
-
-If you are satisfied with your hosting and want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
+If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).

@@ -33,7 +33,18 @@
 							<h1><?php bp_album_picture_album_title()?></h1>
 						</td>
 						<td width="30%">
-							<?php 	bp_album_like_button( bp_album_get_album_id(), 'album' ); ?> Like this gallery
+							<table "width=100%">
+								<tr>
+									<td>
+										<?php 	bp_album_like_button( bp_album_get_album_id(), 'album' ); ?> Like this gallery
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<?php 	bp_album_donate_button( bp_album_get_album_id(), 'album' ); ?>
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 				</table>

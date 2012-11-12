@@ -560,6 +560,7 @@ function bp_album_add_album($owner_type,$owner_id,$title,$description,$priv_lvl,
 	
     global $bp;
 	
+bp_logdebug('bp_album_add_album: started');
 
 		$loc_album_id = BP_Album_Album::find_album($owner_id,$title);
 	if($loc_album_id)
@@ -589,6 +590,7 @@ function bp_album_add_album($owner_type,$owner_id,$title,$description,$priv_lvl,
 	$loc_album->spare2 = $spare2;
 	$loc_album->spare3 = $spare3;
 	$loc_album->spare4 = $spare4;
+bp_logdebug('bp_album_add_album: about to save');
 	
    return $loc_album->save() ? $loc_album->id : false;
   
@@ -1497,7 +1499,45 @@ function bp_album_like_button( $id = '', $type = '' ) {
 		<?php endif;
 
 	endif;
-};
+}
+
+/**
+ * bp_album_donate_button()
+ *
+ * Adds a donation button.
+ *
+ */
+function bp_album_donate_button( $id = '', $type = '' ) {
+	
+	$users_who_like = 0;
+	$liked_count = 0;
+	
+	/* Set the type if not already set, and check whether we are outputting the button on a blogpost or not. */
+	if ( !$type  )
+		$type = 'album';
+	
+	if ( $type == 'album' ) :
+	
+		$album = new BP_Album_Album($id);
+	
+		$donationLink = xprofile_get_field_data('Donation Link', $album->owner_id);
+		$verifiedLink = false;
+		if($donationLink)
+		{
+			$location = strpos($donationLink,'https://www.paypal.com');
+			if($location !== false)
+			{
+				$verifiedLink = true;
+			}
+		}
+		if($verifiedLink ) : ?>
+		
+				<a href="<?php echo $donationLink ?>" class="donate" id="fdonate-<?php echo $id; ?>" title="Donate"><img src="<?php echo BPA_PLUGIN_URL ?>includes/images/gifticon.png" /> Make a donation</a>
+			<?php endif;
+			
+		endif;
+}
+
 
 add_action( 'wp_ajax_activity_like', 'bp_like_process_ajax' );
 
