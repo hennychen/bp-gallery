@@ -23,6 +23,7 @@ This is an early release version of the plugin. You should test it extensively b
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. You can use the default settings select BP Gallery option in the admin screen to view and change them as required.
 5. The plugin creates a new profile group called BPGallery and a new profile field called "Donation Link". The user just needs to add a valid Paypal donation link for a donation icon to appear at the top of each gallery
+6. If the donation link filed does not appear after the upgrade, deactivate and activate the plugin. The new field will appear.
 
 
 == Other Notes ==
