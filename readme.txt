@@ -49,11 +49,16 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 
 = 1.1 = 
 * "Added gallery donations"
+
+= 1.1.1 = 
+* "Added missing donation icon file."
 == Upgrade Notice ==
 = 1.0 =
 First release
 = 1.1 =
 With this release users can now have a donation link and button appear on the galleries, by entering a valid Paypal doantion link into their profile.
+= 1.1.1 =
+Added missing donation icon file
 
 == Help Out! ==
 
