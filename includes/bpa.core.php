@@ -18,7 +18,7 @@ define ( 'BP_ALBUM_IS_INSTALLED', 1 );
 define ( 'BP_ALBUM_DB_VERSION', '0.2' );
 define ( 'BP_ALBUM_VERSION', '0.1.8.11' );
 define ('BPA_PLUGIN_URL', WP_PLUGIN_URL.'/bp-gallery/');
-load_textdomain( 'bp-phototag', dirname( __FILE__ ) . '/languages/bp-phototag-' . get_locale() . '.mo' );
+load_textdomain( 'bp-gallery', dirname( __FILE__ ) . '/languages/bp-gallery-' . get_locale() . '.mo' );
 
 require ( dirname( __FILE__ ) . '/bpa.classes.php' );
 require ( dirname( __FILE__ ) . '/bpa.screens.php' );
@@ -1625,15 +1625,9 @@ function init_photo_tagging() {
         wp_register_script( 'jqueryui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js');
         wp_enqueue_script( 'jqueryui' );
 		
-        wp_register_script( 'jquerytag', $bp->root_domain . '/wp-content/plugins/bp-phototag/photo-tagging/jquery.tag.js');
+        wp_register_script( 'jquerytag', $bp->root_domain . '/wp-content/plugins/bp-gallery/photo-tagging/jquery.tag.js');
         wp_enqueue_script( 'jquerytag' );
- 
-//        wp_register_script( 'uploadifive', $bp->root_domain . '/wp-content/plugins/bp-phototag/photo-tagging/jquery.uploadifive.min.js');
-//        wp_enqueue_script( 'uploadifive' );
-
-//        wp_register_script( 'uploadifivecss', $bp->root_domain . '/wp-content/plugins/bp-phototag/photo-tagging/uploadifive.css');
-//        wp_enqueue_script( 'uploadifivecss' );
-		
+ 		
     }
 }
 add_action('init', 'init_photo_tagging');

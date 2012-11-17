@@ -59,6 +59,9 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 = 1.1.3 = 
 * "Fixed issue where install path if installed through wordpress was different from install path when loaded from download."
 
+= 1.1.4 = 
+* "Fixed incorrect path to tagging javascript"
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -70,7 +73,8 @@ Added missing donation icon file
 Upgrade to this version otherwise BP Gallery profile group will be created each time you activate the plugin resulting in multiple copies of the same group.
 = 1.1.3 = 
 If you have installed a previous version through wordpress the plugin will not function correctly. this upgrade will change your install directory.
-
+=1.1.4=
+Fixed incorrect path to tagging javascript
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
