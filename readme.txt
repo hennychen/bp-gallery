@@ -52,6 +52,10 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 
 = 1.1.1 = 
 * "Added missing donation icon file."
+
+= 1.1.2 = 
+* "Fixed issue where profile group BP Gallery and donation field where added each time the plugin was activated."
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -59,6 +63,8 @@ First release
 With this release users can now have a donation link and button appear on the galleries, by entering a valid Paypal doantion link into their profile.
 = 1.1.1 =
 Added missing donation icon file
+= 1.1.2 = 
+Upgrade to this version otherwise BP Gallery profile group will be created each time you activate the plugin resulting in multiple copies of the same group.
 
 == Help Out! ==
 

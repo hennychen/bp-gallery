@@ -3,7 +3,7 @@
 Plugin Name: BP Gallery
 Plugin URI: http://www.amkd.com.au/wordpress/bp-gallery-plugin/98
 Description: Based on the orginal BP Photos+tags by Jesse Lareaux. This plugin enables users on a BuddyPress site to create multiple albums. Albums can be given the usual privacy restrictions, with the addition of giving Album access to members of a group they have created.
-Version: 1.1.1
+Version: 1.1.2
 Revision Date: November 12, 2012
 Requires at least: 3.1
 Tested up to: WP 3.4.2, BP 1.6.1
@@ -256,9 +256,19 @@ register_deactivation_hook( __FILE__, 'bp_album_deactivate' );
 	}
 function AddDonationProfileField()
 {
+	global $wpdb;
 	$group_args = array(
   	   'name' => 'BP Gallery'
     	 );
+  $sqlStr = "SELECT `id` FROM `wp_bp_xprofile_groups` WHERE `name` = 'BP Gallery'";
+  $groups = $wpdb->get_results($sqlStr);
+  bp_logdebug('BP Gallery : sqlStr: '.$sqlStr);  
+  if(count($groups) > 0)
+  {
+  	bp_logdebug('BP Gallery : Donation group exists : ');
+		return;
+	}
+    	 
 	$group_id = xprofile_insert_field_group( $group_args ); // group's ID}
 	xprofile_insert_field(
     array (
