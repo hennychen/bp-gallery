@@ -56,6 +56,9 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 = 1.1.2 = 
 * "Fixed issue where profile group BP Gallery and donation field where added each time the plugin was activated."
 
+= 1.1.3 = 
+* "Fixed issue where install path if installed through wordpress was different from install path when loaded from download."
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -65,6 +68,8 @@ With this release users can now have a donation link and button appear on the ga
 Added missing donation icon file
 = 1.1.2 = 
 Upgrade to this version otherwise BP Gallery profile group will be created each time you activate the plugin resulting in multiple copies of the same group.
+= 1.1.3 = 
+If you have installed a previous version through wordpress the plugin will not function correctly. this upgrade will change your install directory.
 
 == Help Out! ==
 

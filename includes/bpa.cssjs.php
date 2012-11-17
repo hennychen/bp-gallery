@@ -20,7 +20,7 @@ function bp_album_add_js() {
 
 	if ( $bp->current_component == $bp->album->slug )
 	{
-		wp_enqueue_script( 'bp-gallery-js', WP_PLUGIN_URL .'/BPGallery/includes/js/general.js' );
+		wp_enqueue_script( 'bp-gallery-js', WP_PLUGIN_URL .'/bp-gallery/includes/js/general.js' );
 		wp_localize_script( 'bp-gallery-js', 'BPAAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),   
 																						 'BPADeleteAlbum' => wp_create_nonce( 'BPADeleteAlbum' ),		
 																						 'BPAFeatureImage' => wp_create_nonce( 'BPAFeatureImage' ),		
@@ -40,10 +40,10 @@ function bp_album_add_css() {
     
 	global $bp;
 
-		wp_enqueue_style( 'bp-gallery-css', WP_PLUGIN_URL .'/BPGallery/includes/css/general.css' );
-//		wp_enqueue_script( 'bp-phototag-js', WP_PLUGIN_URL .'/bp-phototag/includes/js/general.js' );
+		wp_enqueue_style( 'bp-gallery-css', WP_PLUGIN_URL .'/bp-gallery/includes/css/general.css' );
+//		wp_enqueue_script( 'bp-phototag-js', WP_PLUGIN_URL .'/bp-gallery/includes/js/general.js' );
 		wp_print_styles();	
-		wp_enqueue_script( 'bp-gallery-js', WP_PLUGIN_URL .'/BPGallery/includes/js/general.js' );
+		wp_enqueue_script( 'bp-gallery-js', WP_PLUGIN_URL .'/bp-gallery/includes/js/general.js' );
 		wp_localize_script( 'bp-gallery-js', 'BPAAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ),   
 																						 'BPADeleteAlbum' => wp_create_nonce( 'BPADeleteAlbum' ),		
 																						 'BPAFeatureImage' => wp_create_nonce( 'BPAFeatureImage' ),		
@@ -52,7 +52,7 @@ function bp_album_add_css() {
 }
 function admin_css()
 {
-		wp_enqueue_style( 'bp-gallery-css', WP_PLUGIN_URL .'/BPGallery/includes/css/general.css' );
+		wp_enqueue_style( 'bp-gallery-css', WP_PLUGIN_URL .'/bp-gallery/includes/css/general.css' );
 }
 add_action( 'wp_head', 'admin_css' );
 add_action( 'admin_head', 'bp_album_add_css' );

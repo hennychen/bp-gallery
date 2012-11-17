@@ -17,7 +17,7 @@
 define ( 'BP_ALBUM_IS_INSTALLED', 1 );
 define ( 'BP_ALBUM_DB_VERSION', '0.2' );
 define ( 'BP_ALBUM_VERSION', '0.1.8.11' );
-define ('BPA_PLUGIN_URL', WP_PLUGIN_URL.'/BPGallery/');
+define ('BPA_PLUGIN_URL', WP_PLUGIN_URL.'/bp-gallery/');
 load_textdomain( 'bp-phototag', dirname( __FILE__ ) . '/languages/bp-phototag-' . get_locale() . '.mo' );
 
 require ( dirname( __FILE__ ) . '/bpa.classes.php' );
