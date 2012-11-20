@@ -1,4 +1,4 @@
-=== BuddyPress BP Gallery ===
+=== BuddyPress BP Gallery Plus ===
 Contributors: caevan
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE 
 Tags: BuddyPress, BP, album, albums, picture, friend tagging, face tags, friend tags, photo tags, photo tagging, face tagging, bp-media, pictures, photos, gallery, galleries, media, privacy, buddypress, social networking, activity, profiles, messaging, friends, groups, forums, microblogging, social, community, networks, networking, cms
@@ -28,12 +28,12 @@ This is an early release version of the plugin. You should test it extensively b
 
 == Other Notes ==
 
-BuddyPress BP Gallery is based of the Photos+tags plugin. Localization/I18n is not fully supported yet
+BuddyPress BP Gallery Plus is based of the Photos+tags plugin. Localization/I18n is not fully supported yet
 
 == Frequently Asked Questions ==
 
-= Will BP Gallery coexist with BP Photos+Tags =
-No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for that plugin. You should uninstall BP Photos+Tags before activating BP Gallery
+= Will BP Gallery Plus coexist with BP Photos+Tags =
+No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement for that plugin. You should uninstall BP Photos+Tags before activating BP Gallery
 == Screenshots ==
 
 1. **Upload Photos** - Upload photos screen with album selection, multiple file upload and visibility. 
@@ -62,6 +62,9 @@ No as BPGallery will not coexist with BP Photos+Tags, it is a replacement for th
 = 1.1.4 = 
 * "Fixed incorrect path to tagging javascript"
 
+= 1.1.5 = 
+* "Changed Plugin name to BP Gallery Plus to avoid conflict with existing BP Gallery plugin."
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -75,6 +78,8 @@ Upgrade to this version otherwise BP Gallery profile group will be created each 
 If you have installed a previous version through wordpress the plugin will not function correctly. this upgrade will change your install directory.
 =1.1.4=
 Fixed incorrect path to tagging javascript
+=1.1.5=
+Change plugin name to BP Gallery Plus to avoid conflict with the existing BP Gallery Plugin
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
