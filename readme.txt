@@ -21,9 +21,11 @@ This is an early release version of the plugin. You should test it extensively b
 1. Download bpGallery from http://www.amkd.com.au/wp-content/uploads/BPGallery.zip and unzip on your local disk
 2. Upload `bpGallery` folder to the `/wp-content/plugins/` directory or use automatic installation from wp plugin panel
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. You can use the default settings select BP Gallery option in the admin screen to view and change them as required.
-5. The plugin creates a new profile group called BPGallery and a new profile field called "Donation Link". The user just needs to add a valid Paypal donation link for a donation icon to appear at the top of each gallery
-6. If the donation link filed does not appear after the upgrade, deactivate and activate the plugin. The new field will appear.
+4. You can use the default settings select BP Gallery Plus option in the admin screen to view and change them as required.
+5. You can configure which lightbox tye image viewer you want to use. Fancybox is the default and comes with the plugin. You can use Thickbox or Colorbox if you prefer.
+6. To speed up image viewing BP Gallery Plus can be configured to load the mid-sized image rather than the full size. If using Fancybox the full sized image can be viewed by clicking the "Full Size" button
+7. The plugin creates a new profile group called BPGallery and a new profile field called "Donation Link". The user just needs to add a valid Paypal donation link for a donation icon to appear at the top of each gallery
+8. If the donation link filed does not appear after the upgrade, deactivate and activate the plugin. The new field will appear.
 
 
 == Other Notes ==
@@ -65,6 +67,9 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 = 1.1.5 = 
 * "Changed Plugin name to BP Gallery Plus to avoid conflict with existing BP Gallery plugin."
 
+= 1.2.0 = 
+* "Function names and table names have all been renamed to avoid conflict with existing plugins thanks to Louis [EllsWeb]. Fancybox is now supplied as the default image viewer, with the added ability to view the mid sized imaged the click to load the full size image. Also can be configured to support colourbox and thickbox. Pagination issues have been addressed and fixed. Phototagging is fixed as well"
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -80,6 +85,9 @@ If you have installed a previous version through wordpress the plugin will not f
 Fixed incorrect path to tagging javascript
 =1.1.5=
 Change plugin name to BP Gallery Plus to avoid conflict with the existing BP Gallery Plugin
+=1.1.2=
+Fixed capatability issues, Now comes with Fancybox for image viewing, can support Thickbox and Colorbox if available. Pagination works. Phototagging is fixed.
+
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).

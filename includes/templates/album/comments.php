@@ -1,4 +1,4 @@
-<?php if ( bp_album_picture_has_activity() && bp_album_comments_enabled() ) : ?>
+<?php if ( bp_gallplus_image_has_activity() && bp_gallplus_comments_enabled() ) : ?>
 
 		<ul id="activity-stream" class="activity-list item-list">
 
@@ -54,9 +54,9 @@
 	
 		</ul>
 
-<?php else : if(bp_is_my_profile() && bp_album_comments_enabled()){ ?>
+<?php else : if(bp_is_my_profile() && bp_gallplus_comments_enabled()){ ?>
 	<div id="message" class="info">
-		<p><?php echo sprintf(__( 'Comments are disabled for this picture. %sEdit the picture%s to enable them.', 'bp-phototag' ),'<a href="'.bp_album_get_picture_edit_url().'">','</a>'); ?></p>
+		<p><?php echo sprintf(__( 'Comments are disabled for this image. %sEdit the image%s to enable them.', 'bp-galleries-plus' ),'<a href="'.bp_gallplus_get_image_edit_url().'">','</a>'); ?></p>
 	</div>
 
 <?php } endif; ?>

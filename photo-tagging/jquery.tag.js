@@ -170,8 +170,8 @@
 			var position = function(context){
 				var jtagdrag = $(".jTagDrag",context);
 				border =   parseInt(jtagdrag.css('borderTopWidth'));
-				left_pos = parseInt(jtagdrag.attr('offsetLeft')) + border;
-				top_pos =  parseInt(jtagdrag.attr('offsetTop')) + border;
+				var left_pos = parseInt(jtagdrag.attr('offsetLeft')) + border;
+				var top_pos =  parseInt(jtagdrag.attr('offsetTop')) + border;
 				return "-"+left_pos+"px -"+top_pos+"px";
 			}
 
@@ -187,7 +187,7 @@
 				$(".jTagTag",overlay).hide();
 			}
 
-			$('<div style="width:'+options.defaultWidth+'px;height:'+options.defaultHeight+'px"class="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo(overlay);
+			$('<div style="width:'+options.defaultWidth+'px;height:'+options.defaultHeight+'px"class="jTagDrag" id="jTagDrag"><div class="jTagSave"><div class="jTagInput"><input type="text" id="jTagLabel"></div><div class="jTagSaveClose"></div><div class="jTagSaveBtn"></div><div style="clear:both"></div></div>').appendTo(overlay);
 
 			overlay.addClass("jTagPngOverlay");
 
@@ -255,8 +255,9 @@
 		
 						height = $(".ui-draggable").height();
 						width = $(".ui-draggable").width();
-						top_pos = $(".ui-draggable").attr('offsetTop');
-						left = $(".ui-draggable").attr('offsetLeft');
+						locPos = $(".ui-draggable").position();
+						top_pos = locPos.top; //$(".ui-draggable").attr('offsetTop');
+						left = locPos.left; //$(".ui-draggable").attr('offsetLeft');
 		
 						tagobj = obj.addTag(width,height,top_pos,left,label);
 		
@@ -279,8 +280,9 @@
 
 				height = $(this).parent().parent().height();
 				width = $(this).parent().parent().width();
-				top_pos = $(this).parent().parent().attr('offsetTop');
-				left = $(this).parent().parent().attr('offsetLeft');
+				locPos = $(this).parent().parent().position();
+				top_pos = locPos.top; //$(this).parent().parent().attr('offsetTop');
+				left = locPos.left //$(this).parent().parent().attr('offsetLeft');
 
 				tagobj = obj.addTag(width,height,top_pos,left,label);
 
@@ -294,7 +296,7 @@
 				obj.hideDrag();
 				$("#enable").html("Tag this photo");
 				$("#enable").attr('class','tag-button')
-				$("div.picture-middle a").attr('id','');
+				$("div.image-middle a").attr('id','');
 			});
 
 			if(options.resizable){

@@ -1,6 +1,6 @@
 <?php
 
-	// To use this sub-template, just add "do_action( 'bp_album_all_images' ); " to any template on your site
+	// To use this sub-template, just add "do_action( 'bp_gallplus_all_images' ); " to any template on your site
 
 	global $bp;
 	$args = array();
@@ -20,24 +20,24 @@
 
 
 	// STEP 1: Run the query.
-	bp_album_query_pictures($args);
+	bp_gallplus_query_images($args);
 
 	$row_count = 0;
 
 	// STEP 2: Check items were found. If so, open the CSS block.
-	if ( bp_album_has_pictures() ) : ?>
+	if ( bp_gallplus_has_images() ) : ?>
 
-	    <div class="bpa-content-wrap" id="default">
+	    <div class="bpgpls-content-wrap" id="default">
 
-		<table class="bpa-content-sitewide">
+		<table class="bpgpls-content-sitewide">
 		    <tr>
 
 		    <?php
 		    // STEP 3: Iterate through the items the query has found, printing out each one.
-		    while ( bp_album_has_pictures() ) : bp_album_the_picture(); ?>
+		    while ( bp_gallplus_has_images() ) : bp_gallplus_the_image(); ?>
 
 			<td>
-				<a href="<?php bp_album_picture_url() ?>" class="media-image"><img src='<?php bp_album_picture_thumb_url() ?>' /></a>
+				<a href="<?php bp_gallplus_image_url() ?>" class="media-image"><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
 			</td>
 		    <?php
 
@@ -57,10 +57,10 @@
 
 	 endif;
 
-	 // This db call resets the pictures template after generating the all images block. If it is removed,
+	 // This db call resets the images template after generating the all images block. If it is removed,
 	 // and the all-images block is used on a page that contains a user image or gallery, the content
 	 // after the all-images block will not render correctly.
 	 
-	 bp_album_query_pictures();
+	 bp_gallplus_query_images();
 
 ?>

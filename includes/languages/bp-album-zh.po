@@ -232,32 +232,32 @@ msgid "Album"
 msgstr "相册"
 
 #: includes/bp-album-core.php:137
-msgid "My pictures"
+msgid "My images"
 msgstr "我的图片"
 
 #: includes/bp-album-core.php:137
 #, php-format
-msgid "%s's pictures"
+msgid "%s's images"
 msgstr "%s 的图片"
 
 #: includes/bp-album-core.php:151
-msgid "Picture"
+msgid "Image"
 msgstr "图片"
 
 #: includes/bp-album-core.php:161
 #: includes/bp-album-screens.php:197
-msgid "Upload picture"
+msgid "Upload image"
 msgstr "上传图片"
 
 #: includes/bp-album-core.php:490
 #: includes/bp-album-core.php:702
 #, php-format
-msgid "%s uploaded a new picture: %s"
+msgid "%s uploaded a new image: %s"
 msgstr "%s 上传了一张新图片到：%s"
 
 #: includes/bp-album-screens.php:39
 #: includes/bp-album-screens.php:59
-msgid "Edit Picture"
+msgid "Edit Image"
 msgstr "编辑图片"
 
 #: includes/bp-album-screens.php:52
@@ -285,11 +285,11 @@ msgid "Hidden (admin only)"
 msgstr "隐藏（仅管理员可用）"
 
 #: includes/bp-album-screens.php:64
-msgid "Picture Title *"
+msgid "Image Title *"
 msgstr "图片标题 *"
 
 #: includes/bp-album-screens.php:70
-msgid "Picture Description"
+msgid "Image Description"
 msgstr "图片描述"
 
 #: includes/bp-album-screens.php:76
@@ -303,7 +303,7 @@ msgid "(limit reached)"
 msgstr "（已达到限额）"
 
 #: includes/bp-album-screens.php:93
-msgid "Picture activity and comments"
+msgid "Image activity and comments"
 msgstr "图片动态及评论"
 
 #: includes/bp-album-screens.php:94
@@ -315,7 +315,7 @@ msgid "Disable"
 msgstr "禁用"
 
 #: includes/bp-album-screens.php:96
-msgid "If picture already has comments this will delete them"
+msgid "If image already has comments this will delete them"
 msgstr "如果图片已经有评论，这将会删除评论"
 
 #: includes/bp-album-screens.php:99
@@ -323,20 +323,20 @@ msgid "Save"
 msgstr "保存"
 
 #: includes/bp-album-screens.php:107
-msgid "Either this url is not valid or you can't edit this picture."
+msgid "Either this url is not valid or you can't edit this image."
 msgstr "该url无效，或是你不能编辑该图片。"
 
 #: includes/bp-album-screens.php:148
 #: includes/bp-album-screens.php:166
-msgid "Upload new picture"
+msgid "Upload new image"
 msgstr "上传新图片"
 
 #: includes/bp-album-screens.php:174
-msgid "Select Picture to Upload *"
+msgid "Select Image to Upload *"
 msgstr "选择要上传的图片 *"
 
 #: includes/bp-album-screens.php:205
-msgid "You have reached the upload limit, delete some pictures if you want to upload more"
+msgid "You have reached the upload limit, delete some images if you want to upload more"
 msgstr "你已经达到了上传限额，如果你想上传更多图片，请先删掉一些"
 
 #: includes/bp-album-screens.php:234
@@ -351,7 +351,7 @@ msgstr "隐私选项错误。"
 
 #: includes/bp-album-screens.php:275
 #: includes/bp-album-screens.php:476
-msgid "You reached the limit for public pictures."
+msgid "You reached the limit for public images."
 msgstr "你达到了公开图片的限额。"
 
 #: includes/bp-album-screens.php:275
@@ -367,17 +367,17 @@ msgstr "请选择另一个隐私选项。"
 
 #: includes/bp-album-screens.php:278
 #: includes/bp-album-screens.php:479
-msgid "You reached the limit for pictures visible to community members."
+msgid "You reached the limit for images visible to community members."
 msgstr "你达到了仅站点成员可见图片的限额。"
 
 #: includes/bp-album-screens.php:281
 #: includes/bp-album-screens.php:482
-msgid "You reached the limit for pictures visible to friends."
+msgid "You reached the limit for images visible to friends."
 msgstr "你达到了好友可见图片的限额。"
 
 #: includes/bp-album-screens.php:284
 #: includes/bp-album-screens.php:485
-msgid "You reached the limit for private pictures."
+msgid "You reached the limit for private images."
 msgstr "你达到了私人图片的限额。"
 
 #: includes/bp-album-screens.php:291
@@ -418,20 +418,20 @@ msgid "Please upload only JPG, GIF or PNG photos."
 msgstr "请仅上传JPG，GIF 或 PNG 图片。"
 
 #: includes/bp-album-screens.php:373
-msgid "Picture uploaded. Now you can change picture details."
+msgid "Image uploaded. Now you can change image details."
 msgstr "图片已上传。现在你可以更改图片详情。"
 
 #: includes/bp-album-screens.php:376
 #: includes/bp-album-screens.php:506
-msgid "There were problems saving picture details."
+msgid "There were problems saving image details."
 msgstr "保存图片详情时出现问题。"
 
 #: includes/bp-album-screens.php:435
-msgid "Picture Title can not be blank."
+msgid "Image Title can not be blank."
 msgstr "图片标题不能为空。"
 
 #: includes/bp-album-screens.php:441
-msgid "Picture Description can not be blank."
+msgid "Image Description can not be blank."
 msgstr "图片描述不能为空。"
 
 #: includes/bp-album-screens.php:495
@@ -439,7 +439,7 @@ msgid "Comments option is not correct."
 msgstr "评论选项不正确。"
 
 #: includes/bp-album-screens.php:503
-msgid "Picture details saved."
+msgid "Image details saved."
 msgstr "图片详情已保存。"
 
 #: includes/bp-album-screens.php:530
@@ -448,23 +448,23 @@ msgid "This url is not valid."
 msgstr "该url无效。"
 
 #: includes/bp-album-screens.php:535
-msgid "You don't have permission to delete this picture"
+msgid "You don't have permission to delete this image"
 msgstr "你无权删除该图片。"
 
 #: includes/bp-album-screens.php:537
-msgid "Picture deleted."
+msgid "Image deleted."
 msgstr "图片已删除。"
 
 #: includes/bp-album-screens.php:541
-msgid "There were problems deleting the picture."
+msgid "There were problems deleting the image."
 msgstr "删除图片时出现问题。"
 
 #: includes/bp-album-templatetags.php:220
-msgid "Edit picture"
+msgid "Edit image"
 msgstr "编辑图片"
 
 #: includes/bp-album-templatetags.php:233
-msgid "Delete picture"
+msgid "Delete image"
 msgstr "删除图片"
 
 #: includes/bp-album-templatetags.php:334
@@ -518,19 +518,19 @@ msgstr "或按ESC取消。"
 
 #: includes/templates/album/comments.php:59
 #, php-format
-msgid "Comments are disabled for this picture. %sEdit picture%s to enable them."
+msgid "Comments are disabled for this image. %sEdit image%s to enable them."
 msgstr "本图片禁止评论。%s编辑图片%s启用评论。"
 
-#: includes/templates/album/pictures.php:46
+#: includes/templates/album/images.php:46
 msgid "No pics here, show something to the community!"
 msgstr "这里还没有图片，向社区展示点什么吧！"
 
-#: includes/templates/album/pictures.php:46
+#: includes/templates/album/images.php:46
 #, php-format
-msgid "Either %s hasn't uploaded any picture yet or they have restricted access"
+msgid "Either %s hasn't uploaded any image yet or they have restricted access"
 msgstr "%s 尚未上传任何图片，或者图片设置了访问权限"
 
 #: includes/templates/album/single.php:51
-msgid "Either this url is not valid or picture has restricted access."
+msgid "Either this url is not valid or image has restricted access."
 msgstr "该url无效，或图片设置了访问权限。"
 

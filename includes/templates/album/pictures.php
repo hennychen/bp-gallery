@@ -34,7 +34,26 @@
 				<div class="picture-thumb-box">
 <!-- In Picture.php -->	
 	                <a href="<?php bp_album_picture_url() ?>" class="thickbox"><img src='<?php bp_album_picture_thumb_url() ?>' /></a>
-	                <!-- a href="<?php bp_album_picture_url() ?>"  class="picture-title"><?php bp_album_picture_title_truncate() ?></a -->	
+		                <?php if (bp_is_my_profile() || is_super_admin()) : ?>
+										<div class="block-core-ItemLinks">
+											<select onchange="var value = this.value; this.options[0].selected = true; eval(value)">
+												<option value="">
+													&laquo; image actions &raquo;
+												</option>
+												<option value="window.location = '<?php bp_album_picture_edit_url_stub()?>'">
+													Edit Image
+												</option>
+												<option value="BPAFeatureImage(<?php bp_album_album_id() ?>,'<?php bp_album_album_title()?>',<?php bp_album_picture_id() ?>)">
+													Feature Image
+												</option>
+												<option value="BPADeleteImage(<?php bp_album_picture_id() ?>)">
+													Delete Image
+												</option>
+											</select>
+										</div>
+
+									<?php endif; ?>		
+                <!-- a href="<?php bp_album_picture_url() ?>"  class="picture-title"><?php bp_album_picture_title_truncate() ?></a -->	
 				</div>
 					
 						<?php endwhile; ?>

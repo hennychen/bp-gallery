@@ -1,12 +1,12 @@
 <?php
 
 /**
- * bp-phototag DATABASE CLASS
+ * bp-galleries-plus DATABASE CLASS
  * Handles database functionality for the plugin
  *
  * @version 0.1.8.11
  * @since 0.1.8.0
- * @package bp-phototag
+ * @package bp-galleries-plus
  * @subpackage Database
  * @license GPL v2.0
  * @link http://code.google.com/p/buddypress-media/wiki/DOCS_BPM_db_top
@@ -14,7 +14,7 @@
  * ========================================================================================================
  */
 
-class BP_Album_Picture {
+class BP_Gallplus_Image {
     
 	var $id;
 	var $owner_type;
@@ -35,7 +35,7 @@ class BP_Album_Picture {
 	var $group_id;
 
 	/**
-	 * bp_album_picture()
+	 * bp_gallplus_image()
 	 *
 	 * This is the constructor, it is auto run when the class is instantiated.
 	 * It will either create a new empty object if no ID is set, or fill the object
@@ -44,7 +44,7 @@ class BP_Album_Picture {
 	 * @version 0.1.8.11
 	 * @since 0.1.8.0
 	 */
-	function BP_Album_Picture( $id = null ) {
+	function BP_Gallplus_Image( $id = null ) {
 		$this->__construct( $id );
 	}
 	
@@ -69,26 +69,26 @@ class BP_Album_Picture {
 		global $wpdb,$bp;
 		
 		$sql = $wpdb->prepare( "SELECT * FROM {$bp->album->table_name} WHERE id = %d", $id );
-		$picture = $wpdb->get_row( $sql );
+		$image = $wpdb->get_row( $sql );
 		
-		if ( $picture ) {
-			$this->owner_type = $picture->owner_type;
-			$this->owner_id = $picture->owner_id;
-			$this->id = $picture->id;
-	        $this->date_uploaded = $picture->date_uploaded;
-	        $this->title = $picture->title;
-	        $this->description = $picture->description;
-	        $this->privacy = $picture->privacy;
-	        $this->pic_org_path = $picture->pic_org_path;
-	        $this->pic_org_url = $picture->pic_org_url;
-	        $this->pic_mid_path = $picture->pic_mid_path;
-	        $this->pic_mid_url = $picture->pic_mid_url;
-	        $this->pic_thumb_path = $picture->pic_thumb_path;
-	        $this->pic_thumb_url = $picture->pic_thumb_url;
-	        $this->album_id = $picture->album_id;
-	        $this->like_count = $picture->like_count;
-	        $this->feature_image = $picture->feature_image;
-	        $this->group_id = $picture->group_id;
+		if ( $image ) {
+			$this->owner_type = $image->owner_type;
+			$this->owner_id = $image->owner_id;
+			$this->id = $image->id;
+	        $this->date_uploaded = $image->date_uploaded;
+	        $this->title = $image->title;
+	        $this->description = $image->description;
+	        $this->privacy = $image->privacy;
+	        $this->pic_org_path = $image->pic_org_path;
+	        $this->pic_org_url = $image->pic_org_url;
+	        $this->pic_mid_path = $image->pic_mid_path;
+	        $this->pic_mid_url = $image->pic_mid_url;
+	        $this->pic_thumb_path = $image->pic_thumb_path;
+	        $this->pic_thumb_url = $image->pic_thumb_url;
+	        $this->album_id = $image->album_id;
+	        $this->like_count = $image->like_count;
+	        $this->feature_image = $image->feature_image;
+	        $this->group_id = $image->group_id;
 		}
 	}
 	
@@ -105,10 +105,10 @@ class BP_Album_Picture {
 	    
 		global $wpdb, $bp;
 		
-		$this->title = apply_filters( 'bp_album_title_before_save', $this->title );
-		$this->description = apply_filters( 'bp_album_description_before_save', $this->description, $this->id );
+		$this->title = apply_filters( 'bp_gallplus_title_before_save', $this->title );
+		$this->description = apply_filters( 'bp_gallplus_description_before_save', $this->description, $this->id );
 		
-		do_action( 'bp_album_data_before_save', $this );
+		do_action( 'bp_gallplus_data_before_save', $this );
 
 		if ( !$this->owner_id)
 		    
@@ -204,7 +204,7 @@ class BP_Album_Picture {
 			$this->id = $wpdb->insert_id;
 		}	
 		
-		do_action( 'bp_album_data_after_save', $this ); 
+		do_action( 'bp_gallplus_data_after_save', $this ); 
 		
 		return $result;
 	}
@@ -223,13 +223,13 @@ class BP_Album_Picture {
 		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->album->table_name} WHERE id = %d", $this->id ) );
 	}
 	
-	public static function query_pictures($args = '',$count=false,$adjacent=false) {
+	public static function query_images($args = '',$count=false,$adjacent=false) {
 	    
 		global $bp, $wpdb;
 
-		$defaults = bp_album_default_query_args();
+		$defaults = bp_gallplus_default_query_args();
 		
-		$r = apply_filters('bp_album_query_args',wp_parse_args( $args, $defaults ));
+		$r = apply_filters('bp_gallplus_query_args',wp_parse_args( $args, $defaults ));
 
 		extract( $r , EXTR_SKIP);
 		
@@ -254,21 +254,21 @@ class BP_Album_Picture {
 				
 			case 'members':
 			case 2:
-				if (bp_album_privacy_level_permitted()>=2 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=2 || $priv_override)
 					$where .= " AND privacy = 2";
 				else
 					return $count ? 0 : array();
 				break;
 			case 'groups':
 			case 3:
-				if (bp_album_privacy_level_permitted()>=3 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=3 || $priv_override)
 					$where .= " AND privacy = 3";
 				else
 					return $count ? 0 : array();
 				break;				
 			case 'friends':
 			case 4:
-				if (bp_album_privacy_level_permitted()>=4 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=4 || $priv_override)
 					$where .= " AND privacy = 4";
 				else
 					return $count ? 0 : array();
@@ -276,7 +276,7 @@ class BP_Album_Picture {
 				
 			case 'private':
 			case 6:
-				if (bp_album_privacy_level_permitted()>=6 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=6 || $priv_override)
 					$where .= " AND privacy = 6";
 				else
 					return $count ? 0 : array();
@@ -284,7 +284,7 @@ class BP_Album_Picture {
 				
 			case 'admin':
 			case 10:
-				if (bp_album_privacy_level_permitted()>=10 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=10 || $priv_override)
 					$where .= " AND privacy = 10";
 				else
 					return $count ? 0 : array();
@@ -296,7 +296,7 @@ class BP_Album_Picture {
 				
 			case 'permitted':
 			default:
-				$where .= " AND privacy <= ".bp_album_privacy_level_permitted();
+				$where .= " AND privacy <= ".bp_gallplus_privacy_level_permitted();
 				break;
 		}
 		if(!$count){	
@@ -387,12 +387,12 @@ class BP_Album_Picture {
 
 	public static function delete_by_user_id($user_id) {
 	    
-		return BP_Album_Picture::delete_by_owner($user_id,'user');
+		return BP_Gallplus_Image::delete_by_owner($user_id,'user');
 	}
 	
-} /** End of BP_Album_Picture */
+} /** End of BP_Gallplus_Image */
 
-class BP_Album_Album {
+class BP_Gallplus_Album {
     
 	var $id;
 	var $owner_type;
@@ -412,7 +412,7 @@ class BP_Album_Album {
 	var $spare4;
 
 	/**
-	 * bp_album_album()
+	 * bp_gallplus_album()
 	 *
 	 * This is the constructor, it is auto run when the class is instantiated.
 	 * It will either create a new empty object if no ID is set, or fill the object
@@ -421,7 +421,7 @@ class BP_Album_Album {
 	 * @version 0.1.8.11
 	 * @since 0.1.8.0
 	 */
-	function BP_Album_Album( $id = null ) {
+	function BP_Gallplus_Album( $id = null ) {
 		
 		$this->__construct( $id );
 	}
@@ -481,10 +481,10 @@ class BP_Album_Album {
 	    
 		global $wpdb, $bp;
 	
-		$this->title = apply_filters( 'bp_album_title_before_save', $this->title );
-		$this->description = apply_filters( 'bp_album_description_before_save', $this->description, $this->id );
+		$this->title = apply_filters( 'bp_gallplus_title_before_save', $this->title );
+		$this->description = apply_filters( 'bp_gallplus_description_before_save', $this->description, $this->id );
 		
-//		do_action( 'bp_album_data_before_save', $this );
+//		do_action( 'bp_gallplus_data_before_save', $this );
 
 		if ( !$this->owner_id)
 		{
@@ -580,7 +580,7 @@ class BP_Album_Album {
 			$this->id = $wpdb->insert_id;
 		}	
 		
-		do_action( 'bp_album_data_after_save', $this ); 
+		do_action( 'bp_gallplus_data_after_save', $this ); 
 		
 		return $result;
 	}
@@ -618,20 +618,20 @@ class BP_Album_Album {
 			$result = $wpdb->get_results( $sql );
 			return $result;
 	}
-		function query_album_picture_ids(){
+		function query_album_image_ids(){
 		global $wpdb, $bp;
 			$sql = $wpdb->prepare( "SELECT id FROM {$bp->album->table_name} WHERE album_id = %d AND owner_id = %d",$this->id,$this->owner_id) ;
 			$result = $wpdb->get_results( $sql );
 			return $result;
 	}
 
-	public static function query_pictures($args = '',$count=false,$adjacent=false) {
+	public static function query_images($args = '',$count=false,$adjacent=false) {
 	    
 		global $bp, $wpdb;
 
-		$defaults = bp_album_default_query_args();
+		$defaults = bp_gallplus_default_query_args();
 		
-		$r = apply_filters('bp_album_query_args',wp_parse_args( $args, $defaults ));
+		$r = apply_filters('bp_gallplus_query_args',wp_parse_args( $args, $defaults ));
 
 		extract( $r , EXTR_SKIP);
 		
@@ -656,14 +656,14 @@ class BP_Album_Album {
 				
 			case 'members':
 			case 2:
-				if (bp_album_privacy_level_permitted()>=2 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=2 || $priv_override)
 					$where .= " AND privacy = 2";
 				else
 					return $count ? 0 : array();
 				break;
 			case 'groups':
 			case 3:
-				if (bp_album_privacy_level_permitted()>=3 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=3 || $priv_override)
 					$where .= " AND privacy = 3";
 				else
 					return $count ? 0 : array();
@@ -671,7 +671,7 @@ class BP_Album_Album {
 				
 			case 'friends':
 			case 4:
-				if (bp_album_privacy_level_permitted()>=4 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=4 || $priv_override)
 					$where .= " AND privacy = 4";
 				else
 					return $count ? 0 : array();
@@ -679,7 +679,7 @@ class BP_Album_Album {
 				
 			case 'private':
 			case 6:
-				if (bp_album_privacy_level_permitted()>=6 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=6 || $priv_override)
 					$where .= " AND privacy = 6";
 				else
 					return $count ? 0 : array();
@@ -687,7 +687,7 @@ class BP_Album_Album {
 				
 			case 'admin':
 			case 10:
-				if (bp_album_privacy_level_permitted()>=10 || $priv_override)
+				if (bp_gallplus_privacy_level_permitted()>=10 || $priv_override)
 					$where .= " AND privacy = 10";
 				else
 					return $count ? 0 : array();
@@ -699,7 +699,7 @@ class BP_Album_Album {
 				
 			case 'permitted':
 			default:
-				$where .= " AND privacy <= ".bp_album_privacy_level_permitted();
+				$where .= " AND privacy <= ".bp_gallplus_privacy_level_permitted();
 				break;
 		}
 		if(!$count){	
@@ -788,18 +788,18 @@ class BP_Album_Album {
 
 	public static function delete_by_user_id($user_id) {
 	    
-		return BP_Album_Album::delete_by_owner($user_id,'user');
+		return BP_Gallplus_Album::delete_by_owner($user_id,'user');
 	}
 	
 }
 
 	/**
-	 * bp_album_default_query_args()
+	 * bp_gallplus_default_query_args()
 	 *
 	 * @version 0.1.8.11
 	 * @since 0.1.8.0
 	 */
-function bp_album_default_query_args(){
+function bp_gallplus_default_query_args(){
     
 	global $bp;
 	$args = array();
@@ -807,7 +807,7 @@ function bp_album_default_query_args(){
 	$args['owner_id'] = $bp->displayed_user->id ? $bp->displayed_user->id : false;
 	$args['id'] = false;
 	$args['page']=1;
-	$args['per_page']=$bp->album->bp_album_per_page;
+	$args['per_page']=$bp->album->bp_gallplus_per_page;
 	$args['max']=false;
 	$args['privacy']='permitted';
 	$args['priv_override']=false;
@@ -815,7 +815,7 @@ function bp_album_default_query_args(){
 	$args['orderkey']='id';
 	$args['groupby']=false;
 	
-	if($bp->album->album_slug == $bp->current_action){
+/*	if($bp->album->album_slug == $bp->current_action){
 
 		if( isset($bp->action_variables[0]) ){
 			$args['id'] = (int)$bp->action_variables[0];
@@ -825,8 +825,8 @@ function bp_album_default_query_args(){
 		}
 			
 //		$args['per_page']=1;
-	}
-	if($bp->album->pictures_slug == $bp->current_action){
+	}*/
+	if($bp->album->images_slug == $bp->current_action){
 		$args['page'] = ( isset($bp->action_variables[0]) && (string)(int) $bp->action_variables[0] === (string) $bp->action_variables[0] ) ? (int) $bp->action_variables[0] : 1 ;
 	}
 

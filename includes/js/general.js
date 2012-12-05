@@ -17,7 +17,7 @@ jQuery(document).ready( function() {
 		jQuery(this).addClass('loading');
 		
 		jQuery.post( ajaxurl, {
-			action: 'BPAAlbumLike',
+			action: 'BPGPLSAlbumLike',
 			'cookie': encodeURIComponent(document.cookie),
 			'type': type,
 			'id': id
@@ -40,35 +40,35 @@ jQuery(document).ready( function() {
 	});
 		jQuery('#selected_album').change(function() {
   	var albumID = jQuery('#selected_album').val();
-  	BPAAlbumPrivacy(albumID);
+  	BPGPLSAlbumPrivacy(albumID);
 	});
 });
 
-	function BPADeleteAlbum(theAlbumID, theAlbumTitle)
+	function BPGPLSDeleteAlbum(theAlbumID, theAlbumTitle)
 	{
 		if(confirm("Are you sure you want to delete album "+theAlbumTitle+" and all it's contents"))
 		{
 				ShowLoadingScreen("Please wait while the album and all it's contents is deleted");
 				jQuery.post(
-									BPAAjax.ajaxurl,
+									BPGPLSAjax.ajaxurl,
 									{
-										action: 'BPADeleteAlbum',
+										action: 'BPGPLSDeleteAlbum',
 										albumID: theAlbumID,
-										BPADeleteAlbumNonce: BPAAjax.BPADeleteAlbum
+										BPGPLSDeleteAlbumNonce: BPGPLSAjax.BPGPLSDeleteAlbum
 									},
 									function(response){
 												if (response.indexOf('success') != -1)
 												{
-													BPAAjaxSuccess = true;
+													BPGPLSAjaxSuccess = true;
 												}
 												else
 												{
-													BPAAjaxSuccess = false;
+													BPGPLSAjaxSuccess = false;
 												}
 //										alert(response);
 								})	
 								.success(function() {
-									if(BPAAjaxSuccess)
+									if(BPGPLSAjaxSuccess)
 									{
 										alert('Album "'+theAlbumTitle+'" Deleted Successfully ');
 										window.location.reload(true);
@@ -90,31 +90,31 @@ jQuery(document).ready( function() {
 
 		}
 	}
-	function BPADeleteImage(theImageID)
+	function BPGPLSDeleteImage(theImageID)
 	{
 		if(confirm("Are you sure you want to delete this image"))
 		{
 				ShowLoadingScreen('Please wait while your image is deleted');
 					jQuery.post(
-									BPAAjax.ajaxurl,
+									BPGPLSAjax.ajaxurl,
 									{
-										action: 'BPADeleteImage',
+										action: 'BPGPLSDeleteImage',
 										imageID: theImageID,
-										BPADeleteImageNonce: BPAAjax.BPADeleteImage
+										BPGPLSDeleteImageNonce: BPGPLSAjax.BPGPLSDeleteImage
 									},
 									function(response){
 												if (response.indexOf('success') != -1)
 												{
-													BPAAjaxSuccess = true;
+													BPGPLSAjaxSuccess = true;
 												}
 												else
 												{
-													BPAAjaxSuccess = false;
+													BPGPLSAjaxSuccess = false;
 												}
 //										alert(response);
 								})	
 								.success(function() {
-									if(BPAAjaxSuccess)
+									if(BPGPLSAjaxSuccess)
 									{
 										alert('Image Deleted Successfully ');
 										window.location.reload(true);
@@ -136,32 +136,32 @@ jQuery(document).ready( function() {
 
 		}
 	}
-	function BPAFeatureImage(theAlbumID,theAlbumTitle, theImageID)
+	function BPGPLSFeatureImage(theAlbumID,theAlbumTitle, theImageID)
 	{
 		if(confirm("Are you sure you want to make this image the feature image for album '"+theAlbumTitle+"'"))
 		{
 				ShowLoadingScreen('Please wait while the new feature image is set');
 				jQuery.post(
-									BPAAjax.ajaxurl,
+									BPGPLSAjax.ajaxurl,
 									{
-										action: 'BPAFeatureImage',
+										action: 'BPGPLSFeatureImage',
 										albumID: theAlbumID,
 										imageID: theImageID,
-										BPAFeatureImageNonce: BPAAjax.BPAFeatureImage
+										BPGPLSFeatureImageNonce: BPGPLSAjax.BPGPLSFeatureImage
 									},
 									function(response){
 												if (response.indexOf('success') != -1)
 												{
-													BPAAjaxSuccess = true;
+													BPGPLSAjaxSuccess = true;
 												}
 												else
 												{
-													BPAAjaxSuccess = false;
+													BPGPLSAjaxSuccess = false;
 												}
 //										alert(response);
 								})	
 								.success(function() {
-									if(BPAAjaxSuccess)
+									if(BPGPLSAjaxSuccess)
 									{
 										alert("Image Set Successfully As Feature Image for '"+theAlbumTitle+"'");
 										window.location.reload(true);
@@ -183,14 +183,14 @@ jQuery(document).ready( function() {
 
 		}
 	}
-	function BPAAlbumPrivacy(theAlbumID)
+	function BPGPLSAlbumPrivacy(theAlbumID)
 	{
 		jQuery.get(
-									BPAAjax.ajaxurl,
+									BPGPLSAjax.ajaxurl,
 									{
-									action: 'BPAAlbumPrivacy',
+									action: 'BPGPLSAlbumPrivacy',
 										albumID: theAlbumID,
-										BPAAlbumPrivacyNonce: BPAAjax.BPAAlbumPrivacy
+										BPGPLSAlbumPrivacyNonce: BPGPLSAjax.BPGPLSAlbumPrivacy
 										},
 									function(response){
 												if (response[0].result.indexOf('success') != -1)

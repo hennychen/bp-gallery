@@ -25,45 +25,45 @@
 					</ul>
 				</div>
 
-  				<?php if ( bp_album_has_albums() ) : ?>
-						<div class="picture-pagination">
-							<?php bp_album_album_pagination(); ?>	
+  				<?php if ( bp_gallplus_has_albums() ) : ?>
+						<div class="image-pagination">
+							<?php bp_gallplus_album_pagination(); ?>	
 						</div>			
 					
-						<div class="picture-gallery">	
+						<div class="image-gallery">	
 							<?php $count = 0; ?>											
-							<?php while ( bp_album_has_albums() ) : bp_album_the_album(); ?>
-								<div class="picture-thumb-box">
-	                <a href="<?php bp_album_album_url() ?>" class="picture-thumb"><img src='<?php echo bp_album_get_album_feature_url() ?>' /></a>
-	                <a href="<?php bp_album_album_url() ?>"  class="picture-title"><?php bp_album_album_title() ?></a>	
+							<?php while ( bp_gallplus_has_albums() ) : bp_gallplus_the_album(); ?>
+								<div class="image-thumb-box">
+	                <a href="<?php bp_gallplus_album_url() ?>" class="image-thumb"><img src='<?php echo bp_gallplus_get_album_feature_url() ?>' /></a>
+	                <a href="<?php bp_gallplus_album_url() ?>"  class="image-title"><?php bp_gallplus_album_title() ?></a>	
 	                <?php if (bp_is_my_profile() || is_super_admin()) : ?>
 										<div class="block-core-ItemLinks">
 											<select onchange="var value = this.value; this.options[0].selected = true; eval(value)">
 												<option value="">
 													&laquo; actions &raquo;
 												</option>
-												<option value="window.location = '<?php bp_album_album_edit_url_stub()?>'">
-													Edit Gallery
+												<option value="window.location = '<?php bp_gallplus_album_edit_url_stub()?>'">
+													Edit Album
 												</option>
-												<option value="BPADeleteAlbum(<?php bp_album_album_id() ?>,'<?php bp_album_album_title()?>')">
-													Delete Gallery
+												<option value="BPGPLSDeleteAlbum(<?php bp_gallplus_album_id() ?>,'<?php bp_gallplus_album_title()?>')">
+													Delete Album
 												</option>
 											</select>
 											<p>
-											<?php bp_album_album_time() ?>
-											<?php bp_album_total_album_image_count() ?> images </br>
-											<?php bp_album_album_priv_info() ?></br>
+											<?php bp_gallplus_album_time() ?>
+											<?php bp_gallplus_total_album_image_count() ?> images </br>
+											<?php bp_gallplus_album_priv_info() ?></br>
 										</p>
 										</div>
 									<?php else : ?>
 											<div class="block-core-ItemLinks">
 												<p>
-													By <?php bp_album_album_get_owner_profile_link() ?>
+													By <?php bp_gallplus_album_get_owner_profile_link() ?>
 											
-												<?php bp_album_album_created_time() ?></BR>
-												<?php bp_album_total_album_image_count() ?> images </br>
-												<!-- div class="bpa-album-meta" -->                       
-												<?php 	bp_album_like_button( bp_album_get_album_id(), 'album' ); ?>
+												<?php bp_gallplus_album_created_time() ?></BR>
+												<?php bp_gallplus_total_album_image_count() ?> images </br>
+												<!-- div class="bpgpls-album-meta" -->                       
+												<?php 	bp_gallplus_like_button( bp_gallplus_get_album_id(), 'album' ); ?>
 													<!-- div class="clear"></div>
 							        	</div-->
 												</p>
@@ -77,7 +77,7 @@
 					<?php else : ?>
 					
 						<div id="message" class="info">
-							<p><?php echo bp_word_or_name( __('No galleries here, show something to the community!', 'bp-phototag' ), __( "Either %s hasn't uploaded any picture yet or they have restricted access", 'bp-phototag' )  ,false,false) ?></p>
+							<p><?php echo bp_word_or_name( __('No galleries here, show something to the community!', 'bp-galleries-plus' ), __( "Either %s hasn't uploaded any image yet or they have restricted access", 'bp-galleries-plus' )  ,false,false) ?></p>
 						</div>
 				
 					<?php endif; ?>

@@ -32,16 +32,16 @@
 				$pic_id = $bp->action_variables[0];
 			}
 	?>
-					<?php if (bp_album_has_pictures() ) : bp_album_the_picture($pic_id);?>
+					<?php if (bp_gallplus_has_images() ) : bp_gallplus_the_image($pic_id);?>
 					
-				<div class="picture-single activity">
-					<h3><?php bp_album_picture_title() ?></h3>
+				<div class="image-single activity">
+					<h3><?php bp_gallplus_image_title() ?></h3>
 					
-                	<div class="picture-outer-container">
-                		<div class="picture-inner-container">
-			                <div class="picture-middle">
-            					<img id="picture-edit-thumb" src='<?php bp_album_picture_middle_url() ?>' />
-				                <?php bp_album_adjacent_links() ?>
+                	<div class="image-outer-container">
+                		<div class="image-inner-container">
+			                <div class="image-middle">
+            					<img id="image-edit-thumb" src='<?php bp_gallplus_image_middle_url() ?>' />
+				                <?php bp_gallplus_adjacent_links() ?>
 			                </div>
 		                </div>
 	                </div>
@@ -53,7 +53,7 @@
 				$table_two_name = $wpdb->prefix . "bp_notifications";
 				$currentuserid = $bp->loggedin_user->id;
 				$currentusername = $bp->loggedin_user->fullname;
-				$pid = bp_album_get_picture_id();
+				$pid = bp_gallplus_get_image_id();
 				$notifs = $wpdb->get_results( "SELECT item_id FROM " . $table_two_name. " WHERE user_id=" . $currentuserid . " AND secondary_item_id =" . $pid, ARRAY_A );
 				foreach ( $notifs as $notif ) {
 					bp_core_delete_all_notifications_by_type( $notif[item_id], album, 'user_tagged' );
@@ -72,8 +72,8 @@
                         }		
                     }
 					// populate default tags
-					$thepic = bp_album_get_picture_id();
-					$table_tags = $wpdb->prefix . "bp_album_tags";
+					$thepic = bp_gallplus_get_image_id();
+					$table_tags = $wpdb->prefix . "bp_gallplus_tags";
 					$default_tags = $wpdb->get_results( "SELECT * FROM " . $table_tags. " WHERE photo_id=" . $thepic, ARRAY_A );
                     for($i=0; $i<count($default_tags); $i++)
                     {
@@ -89,7 +89,7 @@
                 ?>
 				<script type="text/javascript">
 					$(document).ready(function(){
-                        $("#picture-edit-thumb").tag({
+                        $("#image-edit-thumb").tag({
 							autoComplete: [ <?php // set autofill
 								echo '{ value: "' . $currentusername . '", label: "' . $currentusername . '", fid: "' . $currentuserid  . '", plink: "urlurlurlurl" },';
 								for ( $i = 0; $i < count( $friends ); $i++ ) {
@@ -102,7 +102,7 @@
 								} ?>	  
 								],
 							save : function( width,height,top_pos,left,label,the_tag,fid ){
-											var pid = "<?php bp_album_picture_id(); ?>";
+											var pid = "<?php bp_gallplus_image_id(); ?>";
 											var fid = $("#fid").html(); 
 											var oid = "<?php echo $bp->displayed_user->id; ?>";
 											if (window.XMLHttpRequest)
@@ -122,10 +122,10 @@
 													$("#fid").html("");
 													$("#enable").html("Tag this photo");
 													$("#enable").attr('class','tag-button');
-													$("div.picture-middle").find('a').attr('id','');
+													$("div.image-middle").find('a').attr('id','');
 												}
 											  }
-											xmlhttp.open("GET","<?php global $bp; echo $bp->root_domain; ?>/wp-content/plugins/bp-phototag/photo-tagging/phototag-gethint.php?wid="+width+"&hei="+height+"&top="+top_pos+"&left="+left+"&lab="+label+"&pid="+pid+"&fid="+fid+"&oid="+oid,true);
+											xmlhttp.open("GET","<?php global $bp; echo $bp->root_domain; ?>/wp-content/plugins/bp-galleries-plus/photo-tagging/galleries-plus-gethint.php?wid="+width+"&hei="+height+"&top="+top_pos+"&left="+left+"&lab="+label+"&pid="+pid+"&fid="+fid+"&oid="+oid,true);
 											xmlhttp.send();
 										},
 							remove: function(id){
@@ -138,14 +138,14 @@
 											  {// code for IE6, IE5
 											  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 											  }
-											xmlhttp.open("GET","<?php global $bp; echo $bp->root_domain; ?>/wp-content/plugins/bp-phototag/photo-tagging/phototag-gethint.php?d="+id+"&pid=<?php bp_album_picture_id(); ?>",true);
+											xmlhttp.open("GET","<?php global $bp; echo $bp->root_domain; ?>/wp-content/plugins/bp-galleries-plus/photo-tagging/galleries-plus-gethint.php?d="+id+"&pid=<?php bp_gallplus_image_id(); ?>",true);
 											xmlhttp.send();
 										},
                         });
 						$("#enable").click(function(){
-									$("#picture-edit-thumb").parent().mousedown(function(e){
-										$("#picture-edit-thumb").showDrag(e);
-										$("#picture-edit-thumb").parent().unbind('mousedown');
+									$("#image-edit-thumb").parent().mousedown(function(e){
+										$("#image-edit-thumb").showDrag(e);
+										$("#image-edit-thumb").parent().unbind('mousedown');
 									});
 									$("#enable").html("Click on the photo to add a tag...");
 									$("#enable").attr('class','');
@@ -161,18 +161,18 @@
                     
                     
                     
-					<p class="picture-description"><?php bp_album_picture_desc() ?></p>
-	                <p class="picture-meta">
-	                <?php bp_album_picture_edit_link()  ?>	
-	                <?php bp_album_picture_delete_link()  ?></p>
+					<p class="image-description"><?php bp_gallplus_image_desc() ?></p>
+	                <p class="image-meta">
+	                <?php bp_gallplus_image_edit_link()  ?>	
+	                <?php bp_gallplus_image_delete_link()  ?></p>
 	                
-				<?php bp_album_load_subtemplate( apply_filters( 'bp_album_template_screen_comments', 'album/comments' ) ); ?>
+				<?php bp_gallplus_load_subtemplate( apply_filters( 'bp_gallplus_template_screen_comments', 'album/comments' ) ); ?>
 				</div>
 					
 					<?php else : ?>
 					
 				<div id="message" class="info">
-					<p><?php echo bp_word_or_name( __( "This url is not valid.", 'bp-phototag' ), __( "Either this url is not valid or picture has restricted access.", 'bp-phototag' ),false,false ) ?></p>
+					<p><?php echo bp_word_or_name( __( "This url is not valid.", 'bp-galleries-plus' ), __( "Either this url is not valid or image has restricted access.", 'bp-galleries-plus' ),false,false ) ?></p>
 				</div>
 					
 					<?php endif; ?>

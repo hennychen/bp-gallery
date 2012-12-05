@@ -1,4 +1,4 @@
-<?php if ( bp_album_album_has_activity() && bp_album_comments_enabled() ) : ?>
+<?php if ( bp_gallplus_album_has_activity() && bp_gallplus_comments_enabled() ) : ?>
 	<div class="activity" role="main">
 		<ul id="activity-stream" class="activity-list item-list">
 
@@ -68,11 +68,11 @@
 		</ul>
 	</div>
 <?php else : ?>
-	<? if(bp_is_my_profile() && bp_album_comments_enabled()) { ?>
+	<? if(bp_is_my_profile() && bp_gallplus_comments_enabled()) { ?>
 		<div id="message" class="info">
-			<p><?php echo sprintf(__( 'Comments are disabled for this album. %sEdit the album %s to enable them.', 'bp-phototag' ),'<a href="'.bp_album_get_album_edit_url().'">','</a>'); ?></p>
+			<p><?php echo sprintf(__( 'Comments are disabled for this album. %sEdit the album %s to enable them.', 'bp-galleries-plus' ),'<a href="'.bp_gallplus_get_album_edit_url().'">','</a>'); ?></p>
 		</div>
-	</div>
+	<!-- /div -->
 <?php } endif; ?>
 <?php do_action( 'bp_after_activity_loop' ) ?>
 

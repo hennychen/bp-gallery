@@ -3,7 +3,8 @@
 /* ######################################################################### */
 
 
-.bpa-content-wrap#default  {
+
+.bpgpls-content-wrap#default  {
     width:840px;
     margin: 10px 10px 30px 0px;
     background-color:#fff;
@@ -11,26 +12,29 @@
 }
 
 
-.bpa-content-wrap#default table.bpa-content-sitewide {
+
+.bpgpls-content-wrap#default table.bpgpls-content-sitewide {
     padding:5px;
     background: #F3F3FF;
     border: solid 1px #ddd;
     display:block;
 }
 
-.bpa-content-wrap#default table.bpa-content-sitewide { /*tr.alt*/
+.bpgpls-content-wrap#default table.bpgpls-content-sitewide { /*tr.alt*/
     background: #F3F3FF;
 }
 
 
-.bpa-content-wrap#default table.bpa-content-sitewide .media-image a {
+
+.bpgpls-content-wrap#default table.bpgpls-content-sitewide .media-image a {
     background-color: #333;
     vertical-align:middle;
 
 }
 
 
-.bpa-content-wrap#default table.bpa-content-sitewide .media-image img {
+
+.bpgpls-content-wrap#default table.bpgpls-content-sitewide .media-image img {
     background-color: #333;
     margin:auto;
     display:block;
@@ -40,9 +44,9 @@
 
 
 
-/* Gallery */
+/* Album */
 /* // JLL_MOD - fixed CSS */
-.picture-thumb-box {
+.image-thumb-box {
 	width: 151px;
 	text-align: center;
 	float: left;
@@ -53,36 +57,36 @@
 	border: 1px solid #E0E0E0;
 }
 /* // JLL_MOD - fixed CSS */
-.picture-thumb-box .picture-thumb img {
+.image-thumb-box .image-thumb img {
 	height:150px;
 	width:150px;
 	display: block;
 }
 
-.picture-thumb-box .picture-title {
+.image-thumb-box .image-title {
 	text-transform: none;
 	position: relative;
 	top:3px;
 }
 /* Single */
-.picture-single{
+.image-single{
 	overflow: hidden;
 	position: relative;
 	width: 100%;
 }
 
-.picture-single h3{
+.image-single h3{
 	text-align: center;
 }
 
-.picture-outer-container{
+.image-outer-container{
 	position: relative;
 	float: left;
 	left: 50%;
 	margin-bottom: 15px;
 }
 
-.picture-inner-container{
+.image-inner-container{
 	height: 100%;
 	width: 100%;
 	float: left;
@@ -90,11 +94,11 @@
 	right:50%;
 	background: url(title_over.png) -10px -10px no-repeat; /* for preload this image */
 }
-.picture-inner-container img{
+.image-inner-container img{
 	max-width: 546px;
 	display: block;
 }
-.picture-inner-container .picture-middle{
+.image-inner-container .image-middle{
 	max-width: 546px;
 	margin-right: auto;
 	margin-left: auto;
@@ -105,7 +109,7 @@
 
 
 
-.picture-inner-container a{
+.image-inner-container a{
 
 }
 
@@ -126,7 +130,7 @@
 	font-size: 13px;
 }
 
-.picture-inner-container a.picture-prev-link{
+.image-inner-container a.image-prev-link{
 	left: -27px;
 	display: block;
 	position: absolute;
@@ -142,7 +146,8 @@
 
 
 
-.picture-inner-container a.picture-next-link{
+
+.image-inner-container a.image-next-link{
 	right: -27px;
 	display: block;
 	position: absolute;
@@ -153,19 +158,19 @@
 	text-decoration: none;
 	margin-right: 0px;
 }
-.picture-inner-container a.picture-no-adjacent-link{
+.image-inner-container a.image-no-adjacent-link{
 	width: 100%;
 	left: 0;
 }
-.picture-inner-container a.picture-prev-link{
+.image-inner-container a.image-prev-link{
 	background: url(nav_left.png) 0% bottom no-repeat;
 }
-.picture-inner-container a.picture-next-link{
+.image-inner-container a.image-next-link{
 	background-image: url(nav_right.png);
 	background-repeat: no-repeat;
 	background-position: 100% bottom;
 }
-.picture-inner-container a span{
+.image-inner-container a span{
 	display: none;  
 	position: absolute;
 	width: 200%;
@@ -179,7 +184,8 @@
 
 
 
-.picture-inner-container a:hover span, .picture-inner-container a:active span{
+
+.image-inner-container a:hover span, .image-inner-container a:active span{
 	color: #FFF;
 	display: block;
 	font-weight: bold;
@@ -189,14 +195,14 @@
 
 
 
-.picture-inner-container a.picture-prev-link span {
+.image-inner-container a.image-prev-link span {
 	left: 27px;
 	text-align: left;
 	padding-left: 10px;
 	width:536px;
 	top: 0px;
 }
-.picture-inner-container a.picture-next-link span {
+.image-inner-container a.image-next-link span {
 	right: 27px;
 	text-align: right;
 	padding-right: 10px;
@@ -212,51 +218,54 @@
 
 
 
-.picture-inner-container a.picture-no-adjacent-link span{
+
+.image-inner-container a.image-no-adjacent-link span{
 	width: 100%;
 	left: 0;
 	text-align: center;
 }
 
-.picture-description {
+.image-description {
 	clear: both;
 }
-.picture-meta{
+.image-meta{
 	display: block;
 	width: 500px;
 	margin: 0 auto;
 }
-.picture-edit-link, .picture-delete-link{
+.image-edit-link, .image-delete-link{
 	float: right;
 
 	clear: right;
 }
 
-.picture-single div.activity-comments {
+.image-single div.activity-comments {
 	margin-left: 0;
 }
 
 /*edit*/
-#picture-edit-thumb {
+#image-edit-thumb {
 /* // JLL_MOD - fixed css	float: right; */
 margin-right: auto;
 margin-left: auto;
 }
 
 
+
 /* Stream */
-.picture-activity-thumb {
+.image-activity-thumb {
 	float:left;
 	margin-right: 10px;
 }
-.picture-activity-thumb img {
+.image-activity-thumb img {
 	height: 100px;
 	width: 100px;
 }
 
 /* Float Clear */
-.picture-gallery, .picture-adjacent-links { min-height: 0; _zoom: 1; }
-.picture-gallery:after, .picture-adjacent-links:after{ content: " "; height: 0; clear: both; display: block; }
+.image-gallery, .image-adjacent-links { min-height: 0; _zoom: 1; }
+.image-gallery:after, .image-adjacent-links:after{ content: " "; height: 0; clear: both; display: block; }
+
 
 
 
@@ -341,6 +350,7 @@ margin-left: auto;
 }
 
 
+
 .jTagTag{
 	opacity: 0;
 	border:3px solid black;
@@ -394,19 +404,19 @@ display: none;
 #enable {
 	clear: both;
 }
-#bp-phototag-edit-form label#tags {
+#bp-galleries-plus-edit-form label#tags {
 	float: left;
 	margin-right: 10px;
 }
-#bp-phototag-edit-form label#tags a#jTagDeleteTag {
+#bp-galleries-plus-edit-form label#tags a#jTagDeleteTag {
 	color: #CCC;
 	cursor: pointer;
 	font-size: 12px;
 }
-#bp-phototag-edit-form label#tags a#plink {
+#bp-galleries-plus-edit-form label#tags a#plink {
 	color: #333;
 }
-#bp-phototag-edit-form input#jTagLabel {
+#bp-galleries-plus-edit-form input#jTagLabel {
 	height: 6px;
 	float: left;
 }
@@ -425,9 +435,11 @@ display: none;
 .ui-helper-zfix { width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter:Alpha(Opacity=0); }
 
 
+
 /* Interaction Cues
 ----------------------------------*/
 .ui-state-disabled { cursor: default !important; }
+
 
 
 /* Icons
@@ -437,11 +449,13 @@ display: none;
 .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
 
 
+
 /* Misc visuals
 ----------------------------------*/
 
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
 
 
 /*
@@ -455,6 +469,7 @@ display: none;
  *
  * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Trebuchet%20MS,%20Tahoma,%20Verdana,%20Arial,%20sans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=f6a828&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=35&borderColorHeader=e78f08&fcHeader=ffffff&iconColorHeader=ffffff&bgColorContent=eeeeee&bgTextureContent=03_highlight_soft.png&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=333333&iconColorContent=222222&bgColorDefault=f6f6f6&bgTextureDefault=02_glass.png&bgImgOpacityDefault=100&borderColorDefault=cccccc&fcDefault=1c94c4&iconColorDefault=ef8c08&bgColorHover=fdf5ce&bgTextureHover=02_glass.png&bgImgOpacityHover=100&borderColorHover=fbcb09&fcHover=c77405&iconColorHover=ef8c08&bgColorActive=ffffff&bgTextureActive=02_glass.png&bgImgOpacityActive=65&borderColorActive=fbd850&fcActive=eb8f00&iconColorActive=ef8c08&bgColorHighlight=ffe45c&bgTextureHighlight=03_highlight_soft.png&bgImgOpacityHighlight=75&borderColorHighlight=fed22f&fcHighlight=363636&iconColorHighlight=228ef1&bgColorError=b81900&bgTextureError=08_diagonals_thick.png&bgImgOpacityError=18&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffd27a&bgColorOverlay=666666&bgTextureOverlay=08_diagonals_thick.png&bgImgOpacityOverlay=20&opacityOverlay=50&bgColorShadow=000000&bgTextureShadow=01_flat.png&bgImgOpacityShadow=10&opacityShadow=20&thicknessShadow=5px&offsetTopShadow=-5px&offsetLeftShadow=-5px&cornerRadiusShadow=5px
  */
+
 
 
 /* Component containers
@@ -683,6 +698,7 @@ display: none;
 .ui-icon-grip-diagonal-se { background-position: -80px -224px; }
 
 
+
 /* Misc visuals
 ----------------------------------*/
 
@@ -825,4 +841,17 @@ display: none;
   background-color: #2683AE;
   -moz-border-radius-topleft:3px; 
   -moz-border-radius-topright:3px;
+}
+.fancybox-custom .fancybox-skin {
+	box-shadow: 0 0 50px #222;
+}
+.fancybox-view-large {
+	background-image: url('full_screen.png');
+	position: absolute;
+	width:40px;
+	height:40px;
+	z-index: 8040;
+}
+.fancybox-title {
+	height: 24px;
 }

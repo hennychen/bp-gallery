@@ -16,7 +16,7 @@ msgstr ""
 
 #: includes/bp-album-screens.php:40
 #: includes/bp-album-screens.php:62
-msgid "Edit Picture"
+msgid "Edit Image"
 msgstr "Bild bearbeiten"
 
 #: includes/bp-album-screens.php:55
@@ -44,11 +44,11 @@ msgid "Hidden (admin only)"
 msgstr "Versteckt (nur Admins)"
 
 #: includes/bp-album-screens.php:67
-msgid "Picture Title *"
+msgid "Image Title *"
 msgstr "Bildtitel *"
 
 #: includes/bp-album-screens.php:73
-msgid "Picture Description"
+msgid "Image Description"
 msgstr "Bildbeschreibung"
 
 #: includes/bp-album-screens.php:79
@@ -62,7 +62,7 @@ msgid "(limit reached)"
 msgstr "(Grenze erreicht)"
 
 #: includes/bp-album-screens.php:96
-msgid "Picture activity and comments"
+msgid "Image activity and comments"
 msgstr "Aktivitäten und Kommentare"
 
 #: includes/bp-album-screens.php:97
@@ -74,7 +74,7 @@ msgid "Disable"
 msgstr "Deaktivieren"
 
 #: includes/bp-album-screens.php:99
-msgid "If picture already has comments this will delete them"
+msgid "If image already has comments this will delete them"
 msgstr "Falls es bereits Kommentare zum Bild gibt, dann werden diese gelöscht"
 
 #: includes/bp-album-screens.php:102
@@ -82,25 +82,25 @@ msgid "Save"
 msgstr "Speichern"
 
 #: includes/bp-album-screens.php:110
-msgid "Either this url is not valid or you can't edit this picture."
+msgid "Either this url is not valid or you can't edit this image."
 msgstr "Entweder ist diese URL nicht gültig oder du kannst das Bild nicht bearbeiten."
 
 #: includes/bp-album-screens.php:152
 #: includes/bp-album-screens.php:170
-msgid "Upload new picture"
+msgid "Upload new image"
 msgstr "Neues Bild hochladen"
 
 #: includes/bp-album-screens.php:178
-msgid "Select Picture to Upload *"
+msgid "Select Image to Upload *"
 msgstr "Bild zum Hochladen auswählen *"
 
 #: includes/bp-album-screens.php:201
 #: includes/bp-album-core.php:200
-msgid "Upload picture"
+msgid "Upload image"
 msgstr "Bild hochladen"
 
 #: includes/bp-album-screens.php:209
-msgid "You have reached the upload limit, delete some pictures if you want to upload more"
+msgid "You have reached the upload limit, delete some images if you want to upload more"
 msgstr "Du hast das Limit der maximalen Anzahl an Bildern erreicht. Du musst erst Bilder löschen, bevor du neue hochladen kannst."
 
 #: includes/bp-album-screens.php:238
@@ -115,7 +115,7 @@ msgstr "Sichtbarkeitseinstellung ist nicht korrekt."
 
 #: includes/bp-album-screens.php:279
 #: includes/bp-album-screens.php:524
-msgid "You reached the limit for public pictures."
+msgid "You reached the limit for public images."
 msgstr "Du hast die maximale Anzahl an öffentlichen Bildern erreicht."
 
 #: includes/bp-album-screens.php:279
@@ -131,17 +131,17 @@ msgstr "Bitte wähle eine andere Sichtbarkeitsoption."
 
 #: includes/bp-album-screens.php:282
 #: includes/bp-album-screens.php:527
-msgid "You reached the limit for pictures visible to community members."
+msgid "You reached the limit for images visible to community members."
 msgstr "Du hast die maximale Anzahl an Bildern erreicht, die für registrierte Mitglieder sichtbar sind."
 
 #: includes/bp-album-screens.php:285
 #: includes/bp-album-screens.php:530
-msgid "You reached the limit for pictures visible to friends."
+msgid "You reached the limit for images visible to friends."
 msgstr "Du hast die maximale Anzahl an Bildern erreicht, die für Freunde sichtbar sind."
 
 #: includes/bp-album-screens.php:288
 #: includes/bp-album-screens.php:533
-msgid "You reached the limit for private pictures."
+msgid "You reached the limit for private images."
 msgstr "Du hast die maximale Anzahl an Bildern erreicht, die nur für dich sichtbar sind."
 
 #: includes/bp-album-screens.php:295
@@ -180,20 +180,20 @@ msgid "Please upload only JPG, GIF or PNG image files."
 msgstr "Bitte lade nur Bildateien vom Dateiformat JPG, GIF oder PNG hoch."
 
 #: includes/bp-album-screens.php:418
-msgid "Picture uploaded. Now you can change picture details."
+msgid "Image uploaded. Now you can change image details."
 msgstr "Das Bild wurde hochgeladen. Du kannst nun die Details bearbeiten."
 
 #: includes/bp-album-screens.php:421
 #: includes/bp-album-screens.php:559
-msgid "There were problems saving picture details."
+msgid "There were problems saving image details."
 msgstr "Es trat ein Fehler beim Speichern der Details auf."
 
 #: includes/bp-album-screens.php:481
-msgid "Picture Title can not be blank."
+msgid "Image Title can not be blank."
 msgstr "Der Bildtitel darf nicht leer bleiben."
 
 #: includes/bp-album-screens.php:487
-msgid "Picture Description can not be blank."
+msgid "Image Description can not be blank."
 msgstr "Die Bildbeschreibung darf nicht leer bleiben."
 
 #: includes/bp-album-screens.php:543
@@ -201,7 +201,7 @@ msgid "Comments option is not correct."
 msgstr "Die Kommentaroption wurde nicht korrekt gesetzt."
 
 #: includes/bp-album-screens.php:556
-msgid "Picture details saved."
+msgid "Image details saved."
 msgstr "Bilddetails gespeichert."
 
 #: includes/bp-album-screens.php:584
@@ -210,15 +210,15 @@ msgid "This url is not valid."
 msgstr "Diese URL ist ungültig."
 
 #: includes/bp-album-screens.php:589
-msgid "You don't have permission to delete this picture"
+msgid "You don't have permission to delete this image"
 msgstr "Du hast nicht die nötigen Rechte um das Bild zu löschen."
 
 #: includes/bp-album-screens.php:592
-msgid "Picture deleted."
+msgid "Image deleted."
 msgstr "Bild gelöscht."
 
 #: includes/bp-album-screens.php:597
-msgid "There were problems deleting the picture."
+msgid "There were problems deleting the image."
 msgstr "Es traten Probleme beim Löschen des Bildes auf."
 
 #: includes/bp-album-core.php:125
@@ -231,20 +231,20 @@ msgid "Album"
 msgstr "Album"
 
 #: includes/bp-album-core.php:176
-msgid "My pictures"
+msgid "My images"
 msgstr "Meine Bilder"
 
 #: includes/bp-album-core.php:176
-msgid "%s's pictures"
+msgid "%s's images"
 msgstr "%ss Bilder"
 
 #: includes/bp-album-core.php:190
-msgid "Picture"
+msgid "Image"
 msgstr "Bild"
 
 #: includes/bp-album-core.php:556
 #: includes/bp-album-core.php:768
-msgid "%s uploaded a new picture: %s"
+msgid "%s uploaded a new image: %s"
 msgstr "%s hat ein neues Bild hochgeladen: %s"
 
 #: includes/bp-album-admin-network.php:82
@@ -501,7 +501,7 @@ msgid "Save Settings"
 msgstr "Einstellungen speichern"
 
 #: includes/templates/album/single.php:52
-msgid "Either this url is not valid or picture has restricted access."
+msgid "Either this url is not valid or image has restricted access."
 msgstr "Entweder ist diese URL nicht gültig oder der Zugriff auf das Bild ist eingeschränkt."
 
 #: includes/templates/album/comments.php:12
@@ -541,15 +541,15 @@ msgid "or press esc to cancel."
 msgstr "oder drücke ESC um Abzubrechen."
 
 #: includes/templates/album/comments.php:59
-msgid "Comments are disabled for this picture. %sEdit picture%s to enable them."
+msgid "Comments are disabled for this image. %sEdit image%s to enable them."
 msgstr "Kommentare zu diesem Bild sind nicht möglich. %sBearbeite das Bild%s um Kommentare zu aktivieren."
 
-#: includes/templates/album/pictures.php:46
+#: includes/templates/album/images.php:46
 msgid "No pics here, show something to the community!"
 msgstr "Hier gibt es noch keine Bilder."
 
-#: includes/templates/album/pictures.php:46
-msgid "Either %s hasn't uploaded any picture yet or they have restricted access"
+#: includes/templates/album/images.php:46
+msgid "Either %s hasn't uploaded any image yet or they have restricted access"
 msgstr "Entweder hat %s keine Bilder hochgeladen oder seine Bilder unterliegen Zugriffsbeschränkungen"
 
 #: includes/bp-album-admin-local.php:86
@@ -557,11 +557,11 @@ msgid " - [Single Site Mode]"
 msgstr "- [Einzelblog-Modus]"
 
 #: includes/bp-album-templatetags.php:247
-msgid "Edit picture"
+msgid "Edit image"
 msgstr "Bild bearbeiten"
 
 #: includes/bp-album-templatetags.php:260
-msgid "Delete picture"
+msgid "Delete image"
 msgstr "Bild löschen"
 
 #: includes/bp-album-templatetags.php:361
