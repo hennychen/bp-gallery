@@ -32,10 +32,27 @@
 						<?php while ( bp_gallplus_has_images() ) : bp_gallplus_the_image(); ?>
 
 				<div class="image-thumb-box">
-<!-- In Image.php -->	
 	                <a href="<?php bp_gallplus_image_url() ?>" class="thickbox"><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
-	                <!-- a href="<?php bp_gallplus_image_url() ?>"  class="image-title"><?php bp_gallplus_image_title_truncate() ?></a -->	
-				</div>
+	                <?php if (bp_is_my_profile() || is_super_admin()) : ?>
+										<div class="block-core-ItemLinks">
+											<select onchange="var value = this.value; this.options[0].selected = true; eval(value)">
+												<option value="">
+													&laquo; image actions &raquo;
+												</option>
+												<option value="window.location = '<?php bp_gallplus_image_edit_url()?>'">
+													Edit Image
+												</option>
+												<option value="BPGPLSFeatureImage(<?php bp_gallplus_album_id() ?>,'<?php bp_gallplus_album_title()?>',<?php bp_gallplus_image_id() ?>)">
+													Feature Image
+												</option>
+												<option value="BPGPLSDeleteImage(<?php bp_gallplus_image_id() ?>)">
+													Delete Image
+												</option>
+											</select>
+										</div>
+
+									<?php endif; ?>		
+					</div>
 					
 						<?php endwhile; ?>
 				</div>					

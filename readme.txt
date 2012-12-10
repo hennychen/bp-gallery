@@ -70,6 +70,9 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 = 1.2.0 = 
 * "Function names and table names have all been renamed to avoid conflict with existing plugins thanks to Louis [EllsWeb]. Fancybox is now supplied as the default image viewer, with the added ability to view the mid sized imaged the click to load the full size image. Also can be configured to support colourbox and thickbox. Pagination issues have been addressed and fixed. Phototagging is fixed as well"
 
+= 1.2.1 = 
+* "Fixed issue edit album page did no load correctly, image edit no available on the Image Tab, Admins can now edit users albums and images,'Liked' images loads correctly"
+
 == Upgrade Notice ==
 = 1.0 =
 First release
@@ -81,13 +84,14 @@ Added missing donation icon file
 Upgrade to this version otherwise BP Gallery profile group will be created each time you activate the plugin resulting in multiple copies of the same group.
 = 1.1.3 = 
 If you have installed a previous version through wordpress the plugin will not function correctly. this upgrade will change your install directory.
-=1.1.4=
+= 1.1.4=
 Fixed incorrect path to tagging javascript
-=1.1.5=
+= 1.1.5=
 Change plugin name to BP Gallery Plus to avoid conflict with the existing BP Gallery Plugin
-=1.1.2=
+= 1.2.0=
 Fixed capatability issues, Now comes with Fancybox for image viewing, can support Thickbox and Colorbox if available. Pagination works. Phototagging is fixed.
-
+= 1.2.1=
+Admins can edit users albums and images. Image edit now possible from the Image tabe under My Galleries
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).

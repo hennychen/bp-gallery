@@ -214,7 +214,7 @@ function bp_gallplus_setup_nav() {
 		'parent_url' => $album_link,
 		'screen_function' => 'bp_gallplus_screen_upload',
 		'position' => 40,
-		'user_has_access' => bp_is_my_profile() // Only the logged in user can access this on his/her profile
+		'user_has_access' => (bp_is_my_profile()|| is_super_admin()) // Only the logged in user can access this on his/her profile
 	) );
 	bp_core_new_subnav_item( array(
 		'name' => __( 'View Image', 'bp-galleries-plus' ),
@@ -223,7 +223,7 @@ function bp_gallplus_setup_nav() {
 		'parent_url' => $album_link,
 		'screen_function' => 'bp_gallplus_screen_single',
 		'position' => 50,
-		'user_has_access' => bp_is_my_profile() // Only the logged in user can access this on his/her profile
+		'user_has_access' => (bp_is_my_profile()|| is_super_admin()) // Only the logged in user can access this on his/her profile
 	) ); 
 	
 	bp_core_new_subnav_item( array(
@@ -233,7 +233,7 @@ function bp_gallplus_setup_nav() {
 		'parent_url' => $album_link,
 		'screen_function' => 'bp_gallplus_screen_add_album',
 		'position' => 60,
-		'user_has_access' => bp_is_my_profile() // Only the logged in user can access this on his/her profile
+		'user_has_access' => (bp_is_my_profile()|| is_super_admin()) // Only the logged in user can access this on his/her profile
 	) );
 	bp_core_new_subnav_item( array(
 		'name' => __( 'View Gallery', 'bp-galleries-plus' ),
@@ -1485,7 +1485,7 @@ function bp_gallplus_like_button( $id = '', $type = '' ) {
 			if ( !bp_gallplus_like_is_liked( $id, 'album' ) ) : ?>
 				<a href="#" class="like_album" id="like-album-<?php echo $id; ?>" title="like this album"><img src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsm.png" /><?php  if ( $liked_count ) echo ' (' . $liked_count . ')'; ?></a>
 			<?php else : ?>
-				<img class="liked_album" src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/trans.png" alt="You already like this album"/><?php  if ( $liked_count ) echo ' (' . $liked_count . ')'; ?>
+				<img class="liked_album" src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsmgray.png" alt="You already like this album"/><?php  if ( $liked_count ) echo ' (' . $liked_count . ')'; ?>
 			<?php endif;
 			
 		endif;

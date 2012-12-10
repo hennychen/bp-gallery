@@ -53,16 +53,18 @@ function bp_gallplus_show_albums() {
 		bp_gallplus_query_albums();
 	}		
 
-	if ( $bp->current_component == $bp->album->slug && $bp->album->album_slug == $bp->current_action && $albums_template->album_count && isset($bp->action_variables[1]) && $bp->album->edit_slug == $bp->action_variables[1]  ) {
-	
-		do_action( 'bp_gallplus_screen_edit' );
+	if ( $bp->current_component == $bp->album->slug && (($bp->album->album_slug == $bp->current_action) || ($bp->album->albums_slug == $bp->current_action)) && $albums_template->album_count && isset($bp->action_variables[1]) && $bp->album->edit_slug == $bp->action_variables[1]  ) {
+		if((bp_is_my_profile()|| is_super_admin()))
+		{
+			do_action( 'bp_gallplus_screen_edit' );
 
-		add_action( 'bp_template_content', 'bp_gallplus_screen_edit_album_content' );
+			add_action( 'bp_template_content', 'bp_gallplus_screen_edit_album_content' );
 //		add_action( 'bp_template_content', 'bp_gallplus_screen_edit_content' );
 	
-		bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
+			bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 		
-		return;
+			return;
+		}
 	}
 	
 	do_action( 'bp_gallplus_show_albums' );
