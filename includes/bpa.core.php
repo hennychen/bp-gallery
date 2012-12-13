@@ -565,7 +565,7 @@ function bp_gallplus_add_image($owner_type,$owner_id,$title,$description,$priv_l
  * @version 0.1.8.11
  * @since 0.1.8
  */
-function bp_gallplus_add_album($owner_type,$owner_id,$title,$description,$priv_lvl,$date_uploaded,$pic_org_url,$pic_org_path,$group_id,$spare2,$spare3,$spare4,$feature_image,$like_count){
+function bp_gallplus_add_album($owner_type,$owner_id,$title,$description,$priv_lvl,$date_uploaded,$pic_org_url,$pic_org_path,$group_id,$spare2,$spare3,$spare4,$feature_image="",$like_count=0){
 	
     global $bp;
 	

@@ -72,6 +72,8 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 
 = 1.2.1 = 
 * "Fixed issue edit album page did no load correctly, image edit no available on the Image Tab, Admins can now edit users albums and images,'Liked' images loads correctly"
+= 1.2.2 = 
+* "Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
 
 == Upgrade Notice ==
 = 1.0 =
@@ -92,6 +94,8 @@ Change plugin name to BP Gallery Plus to avoid conflict with the existing BP Gal
 Fixed capatability issues, Now comes with Fancybox for image viewing, can support Thickbox and Colorbox if available. Pagination works. Phototagging is fixed.
 = 1.2.1=
 Admins can edit users albums and images. Image edit now possible from the Image tabe under My Galleries
+= 1.2.2=
+* "Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
