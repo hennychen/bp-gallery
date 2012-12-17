@@ -729,10 +729,32 @@ function bp_gallplus_action_upload() {
 					} 
 					else
 					{
-						$pic_mid = wp_create_thumbnail( $pic_org_path, $bp->album->bp_gallplus_middle_size );
-						$pic_mid_path = str_replace( '//', '/', $pic_mid );
-						$pic_mid_url = str_replace($abs_path_to_files,'/',$pic_mid_path);
-
+						if(is_version('3.5'))
+						{
+					    list( $width , $height ) = getimagesize( $pic_org_path );
+       				$path_parts = pathinfo( $pic_org_path);
+       				$file_name = $path_parts['filename'];
+							$editor = wp_get_image_editor( $pic_org_path );
+							if($width > $height)
+							{
+								$editor->resize( $bp->album->bp_gallplus_middle_size, 0,false);
+							}
+							else
+							{
+								$editor->resize( 0, $bp->album->bp_gallplus_middle_size,false);
+							}
+       				$new_fileName = $file_name."_".$editor->get_suffix();
+       				$pic_mid_path = $path_parts['dirname']."/".$new_fileName;
+							$new_image_info = $editor->save( $pic_mid_path );
+							$pic_mid_path = $new_image_info['path'];
+							$pic_mid_url = str_replace($abs_path_to_files,'/',$pic_mid_path);
+						}
+						else
+						{
+							$pic_mid = wp_create_thumbnail( $pic_org_path, $bp->album->bp_gallplus_middle_size );
+							$pic_mid_path = str_replace( '//', '/', $pic_mid );
+							$pic_mid_url = str_replace($abs_path_to_files,'/',$pic_mid_path);
+						}
 						if (!$bp->album->bp_gallplus_keep_original)
 						{
 
@@ -748,9 +770,31 @@ function bp_gallplus_action_upload() {
 					} 
 					else
 					{
-						$pic_thumb = image_resize( $pic_mid_path, $bp->album->bp_gallplus_thumb_size, $bp->album->bp_gallplus_thumb_size, true);
-						$pic_thumb_path = str_replace( '//', '/', $pic_thumb );
-						$pic_thumb_url = str_replace($abs_path_to_files,'/',$pic_thumb);
+						if(is_version('3.5'))
+						{
+							$editor = wp_get_image_editor( $pic_mid_path );
+							if ( ! is_wp_error( $editor ) ) 
+							{
+								$editor->resize( $bp->album->bp_gallplus_thumb_size, $bp->album->bp_gallplus_thumb_size,true);
+       					$path_parts = pathinfo( $pic_org_path);
+       					$file_name = $path_parts['filename'];
+       					$new_fileName = $file_name."_".$editor->get_suffix();
+       					$pic_thumb_path = $path_parts['dirname']."/".$new_fileName;
+								$new_image_info = $editor->save( $pic_thumb_path );
+								$pic_thumb_path = $new_image_info['path'];
+								$pic_thumb_url = str_replace($abs_path_to_files,'/',$pic_thumb_path);
+							}
+							else
+							{
+								bp_logdebug('Image resize error');
+							}
+						}
+						else
+						{
+							$pic_thumb = image_resize( $pic_mid_path, $bp->album->bp_gallplus_thumb_size, $bp->album->bp_gallplus_thumb_size, true);
+							$pic_thumb_path = str_replace( '//', '/', $pic_thumb );
+							$pic_thumb_url = str_replace($abs_path_to_files,'/',$pic_thumb);
+						}
 					}
 
 					$owner_type = 'user';
@@ -1409,8 +1453,7 @@ function bp_gallplus_screen_edit_album_content() {
 function bp_gallplus_action_edit_album() {
     
 	global $bp;
-	
-	if ( $bp->current_component == $bp->album->slug && $bp->album->album_slug == $bp->current_action && isset($bp->action_variables[1]) && $bp->album->edit_slug == $bp->action_variables[1]  && isset( $_POST['submit'] )) 
+	if ( $bp->current_component == $bp->album->slug && $bp->album->albums_slug == $bp->current_action && isset($bp->action_variables[1]) && $bp->album->edit_slug == $bp->action_variables[1]  && isset( $_POST['submit'] )) 
 	{
 	
 		check_admin_referer('bp-galleries-plus-edit-album');
@@ -1534,5 +1577,14 @@ function bp_gallplus_action_edit_album() {
 add_action('bp_actions','bp_gallplus_action_edit_album',3);
 add_action('wp','bp_gallplus_action_edit_album',3);
 
-
+if ( ! function_exists( 'is_version' ) ) {
+    function is_version( $version = '3.5' ) {
+        global $wp_version;
+         
+        if ( version_compare( $wp_version, $version, '>=' ) ) {
+            return true;
+        }
+        return false;
+    }
+}
 ?>

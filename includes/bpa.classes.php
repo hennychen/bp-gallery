@@ -339,7 +339,7 @@ class BP_Gallplus_Image {
 				}
 			}
 			
-			$sql = $wpdb->prepare( "SELECT * FROM {$bp->album->table_name} WHERE $where $order $limits") ;
+			$sql = "SELECT * FROM ".$bp->album->table_name." WHERE ".$where." ".$order." ".$limits;
 			$result = $wpdb->get_results( $sql );
 			// We need to any images that belong to a group the member is not a member of
 			if(!is_super_admin())
@@ -368,7 +368,7 @@ class BP_Gallplus_Image {
 				$group='GROUP BY privacy';
 			}
 			
-			$sql =  $wpdb->prepare( "SELECT DISTINCT $select COUNT(id) AS count FROM {$bp->album->table_name} WHERE $where $group") ;
+			$sql =  "SELECT DISTINCT ".$select." COUNT(id) AS count FROM ".$bp->album->table_name." WHERE ".$where." ".$group;
 			if ($group)
 				$result = $wpdb->get_results( $sql );
 			else
@@ -742,7 +742,7 @@ class BP_Gallplus_Album {
 				}
 			}
 			
-			$sql = $wpdb->prepare( "SELECT * FROM {$bp->album->albums_table_name} WHERE $where $order $limits") ;
+			$sql = "SELECT * FROM ".$bp->album->albums_table_name." WHERE ".$where." ".$order." ".$limits;
 			$result = $wpdb->get_results( $sql );
 			// We need to any albums that belong to a group the member is not a member of
 			if(!is_super_admin())
@@ -769,7 +769,10 @@ class BP_Gallplus_Album {
 				$group='GROUP BY privacy';
 			}
 			
-			$sql =  $wpdb->prepare( "SELECT DISTINCT $select COUNT(id) AS count FROM {$bp->album->albums_table_name} WHERE $where $group") ;
+		//	$sql =  $wpdb->prepare( "SELECT DISTINCT $select COUNT(id) AS count FROM {$bp->album->albums_table_name} WHERE $where $group") ;
+		//	$sql =  $wpdb->prepare( "SELECT DISTINCT %s COUNT(id) AS count FROM {$bp->album->albums_table_name} WHERE %s %s",$select,$where,$group) ;
+			$sql =  "SELECT DISTINCT ".$select." COUNT(id) AS count FROM ".$bp->album->albums_table_name." WHERE ".$where." ".$group;
+//			$sql =  $wpdb->prepare($sqlStr) ;
 			if ($group)
 				$result = $wpdb->get_results( $sql );
 			else

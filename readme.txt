@@ -3,7 +3,7 @@ Contributors: caevan
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE 
 Tags: BuddyPress, BP, album, albums, picture, friend tagging, face tags, friend tags, photo tags, photo tagging, face tagging, bp-media, pictures, photos, gallery, galleries, media, privacy, buddypress, social networking, activity, profiles, messaging, friends, groups, forums, microblogging, social, community, networks, networking, cms
 Requires at least: 3.1.0
-Tested up to: 3.4.1
+Tested up to: 3.5.0
 Stable tag: 1.1
 License: GPLv2 or later
 
@@ -72,8 +72,12 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 
 = 1.2.1 = 
 * "Fixed issue edit album page did no load correctly, image edit no available on the Image Tab, Admins can now edit users albums and images,'Liked' images loads correctly"
+
 = 1.2.2 = 
 * "Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
+
+= 1.2.3 = 
+* "Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
 
 == Upgrade Notice ==
 = 1.0 =
@@ -95,7 +99,9 @@ Fixed capatability issues, Now comes with Fancybox for image viewing, can suppor
 = 1.2.1=
 Admins can edit users albums and images. Image edit now possible from the Image tabe under My Galleries
 = 1.2.2=
-* "Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
+"Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
+= 1.2.3 = 
+"Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
