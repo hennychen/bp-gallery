@@ -3,7 +3,7 @@ Contributors: caevan
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE 
 Tags: BuddyPress, BP, album, albums, picture, friend tagging, face tags, friend tags, photo tags, photo tagging, face tagging, bp-media, pictures, photos, gallery, galleries, media, privacy, buddypress, social networking, activity, profiles, messaging, friends, groups, forums, microblogging, social, community, networks, networking, cms
 Requires at least: 3.1.0
-Tested up to: 3.5.0
+Tested up to: WP 3.5, BuddyPress 1.6.1
 Stable tag: 1.1
 License: GPLv2 or later
 
