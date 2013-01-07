@@ -25,6 +25,7 @@ require ( dirname( __FILE__ ) . '/bpa.screens.php' );
 require ( dirname( __FILE__ ) . '/bpa.cssjs.php' );
 require ( dirname( __FILE__ ) . '/bpa.template.tags.php' );
 require ( dirname( __FILE__ ) . '/bpa.filters.php' );
+require ( dirname( __FILE__ ) . '/bpa.group.php' );
 
 require_once( ABSPATH . '/wp-admin/includes/image.php' );
 require_once( ABSPATH . '/wp-admin/includes/file.php' );
@@ -63,6 +64,9 @@ function bp_gallplus_setup_globals() {
 	$bp->album->albums_slug = 'albums';
 	$bp->album->albums_add_slug = 'add';
 	$bp->album->single_edit_slug = 'single';
+	$bp->album->group_slug = 'groups';
+	$bp->album->group_gallery_slug = 'gallery';
+	
 	
 
         $bp->album->bp_gallplus_max_images = get_site_option( 'bp_gallplus_max_images' );
@@ -70,6 +74,7 @@ function bp_gallplus_setup_globals() {
         $bp->album->bp_gallplus_max_priv0_images = get_site_option( 'bp_gallplus_max_priv0_images' );
         $bp->album->bp_gallplus_max_priv2_images = get_site_option( 'bp_gallplus_max_priv2_images' );
         $bp->album->bp_gallplus_max_priv3_images = get_site_option( 'bp_gallplus_max_priv3_images' );
+        $bp->album->bp_gallplus_max_priv5_images = get_site_option( 'bp_gallplus_max_priv3_images' );
         $bp->album->bp_gallplus_max_priv4_images = get_site_option( 'bp_gallplus_max_priv4_images' );
         $bp->album->bp_gallplus_max_priv6_images = get_site_option( 'bp_gallplus_max_priv6_images' );
         $bp->album->bp_gallplus_keep_original = get_site_option( 'bp_gallplus_keep_original' );
@@ -153,7 +158,11 @@ function bp_gallplus_setup_nav() {
     
 	global $bp,$images_template;
 
-	$nav_item_name = apply_filters( 'bp_gallplus_nav_item_name', __( 'Galleries', 'bp-galleries-plus' ) );
+	$numAlbums = bp_gallplus_nav_album_count();
+	if($numAlbums > 0)
+		$nav_item_name = apply_filters( 'bp_gallplus_nav_item_name', __( 'Galleries <span>'.$numAlbums.'</span>', 'bp-galleries-plus' ) );
+	else
+		$nav_item_name = apply_filters( 'bp_gallplus_nav_item_name', __( 'Galleries', 'bp-galleries-plus' ) );
 
 	bp_core_new_nav_item( array(
 		'name' => $nav_item_name,
@@ -391,7 +400,7 @@ function bp_gallplus_limits_info(){
 	$tot_count = 0;
 	$tot_remaining = false;
 	
-	foreach(array(0,2,3,4,6,10) as $i){
+	foreach(array(0,2,3,4,5,6,10) as $i){
 		$return[$i]['count'] = 0;
 		foreach ($results as $r){
 			if($r->privacy == $i){
@@ -447,6 +456,7 @@ function bp_gallplus_limits_info(){
  * @since 0.1.8
  */
 function bp_gallplus_get_images($args = ''){
+	
 	return bp_gallplus_Image::query_images($args);
 }
 
@@ -557,6 +567,7 @@ function bp_gallplus_add_image($owner_type,$owner_id,$title,$description,$priv_l
 	$pic->pic_thumb_path = $pic_thumb_path;
 	$pic->album_id = $album_id;
 	$pic->group_id = $group_id;	
+	$pic->media_type = 0;
     return $pic->save() ? $pic->id : false;
 }
 /**
@@ -667,8 +678,12 @@ function bp_gallplus_update_privacy($album_id,$priv_lvl,$group_id){
     global $bp;
 	
 	$loc_album = new BP_Gallplus_Album($album_id);
+
 	if(!empty($loc_album->id)){
-	
+		if(($loc_album->owner_type == 'admin') || ($loc_album->owner_type == 'group'))
+		{
+			return true;
+		}
 		$priv_change = false;
 		$loc_album->privacy = $priv_lvl;
 		$loc_album->group_id = $group_id;
@@ -964,7 +979,26 @@ function bp_gallplus_record_album_activity($album_data, $update = false) {
 
 	// ===========================================================================================================
 
-	$content = '<p> <a href="'. $primary_link .'" class="image-activity-thumb" title="'.$title.'"><img src="'. $image_path .'" /></a>'.$desc.'</p>';
+//	$content = '<p> <a href="'. $primary_link .'" class="image-activity-thumb" title="'.$title.'"><img src="'. $image_path .'" /></a>'.$desc.'</p>';
+	if ($album_data->privacy < 3)
+	{
+		$content = '<p> <a href="'. $primary_link .'" class="image-activity-thumb" title="'.$title.'"><img src="'. $image_path .'" /></a>'.$desc.'</p>';
+	}
+	else
+	{
+		switch($album_data->privacy < 3)
+		{
+			case 5: 
+			case 3: $content = '<p> For Group Members </p>';
+							break;
+		 	case 4: $content = '<p> For Friends Only </p>';
+							break;
+		 	case 6: $content = '<p> Private </p>';
+							break;
+			default : $content = '<p> Private </p>';
+							break;
+		}	
+	}
 	
 	$type = 'bp_gallplus_image';
 	$item_id = $album_data->id;
@@ -974,7 +1008,41 @@ function bp_gallplus_record_album_activity($album_data, $update = false) {
 
 	return $returnValue;
 }
+function bp_gallplus_record_group_album_activity( $group_id, $image_id ) {
+	global $bp;
 
+		if ( !$group_id ) return;
+	$group = new BP_Groups_Group( $group_id, true );
+	$image = new BP_Gallplus_Image($image_id);
+	$title = $group->name;
+	//$activity_action = sprintf( __( '%s published the post %s in the group %s:', 'buddypress'), bp_core_get_userlink( $post->post_author ), '<a href="' . get_permalink( $post->ID ) .'">' . attribute_escape( $post->post_title ) . '</a>', '<a href="' . bp_get_group_permalink( $group ) . '">' . attribute_escape( $group->name ) . '</a>' );
+	$activity_action = sprintf( __( '%s Posted an image to : %s', 'bp-galleries-plus' ), bp_core_get_userlink($image->owner_id), '<a href="'. $primary_link .'">'.$title.'</a>' );
+	//$activity_content = bp_create_excerpt( $post->post_content );
+	if($bp->album->bp_gallplus_url_remap == true){
+
+	    $filename = substr( $image->pic_thumb_url, strrpos($image->pic_thumb_url, '/') + 1 );
+	    $owner_id = $image->owner_id;
+	    $image_path = $bp->album->bp_gallplus_base_url . '/' . $owner_id . '/' . $filename;
+	}
+	else {
+
+	    $image_path = bp_get_root_domain().$image->pic_thumb_url;
+	}
+	$primary_link = bp_core_get_user_domain($image->owner_id) . $bp->album->slug . '/'.$bp->album->single_slug.'/'.$image->id . '/';
+	$activity_content = '<p> <a href="'. $primary_link .'" class="image-activity-thumb" title="'.$title.'"><img src="'. $image_path .'" /></a>'.$desc.'</p>';
+
+	/* Record this in activity streams */
+	$r = groups_record_activity( array(
+		'action' =>  $activity_action,
+		'content' => $activity_content, 
+		'primary_link' => $primary_link,
+		'type' => 'new_groupblog_post',
+		'item_id' => $group_id,
+		'secondary_item_id' => $image->owner_id,
+		'hide_sitewide' => 0
+	) );
+
+}
 /********************************************************************************
  * Activity & Notification Functions
  *
@@ -1395,6 +1463,23 @@ global $bp;
 	$album->save();
 	return $album->like_count;
 }
+function bp_gallplus_image_add_like($image_id, $user_id ='') {
+global $bp;
+	if ( !$image_id )
+		return false;
+
+	if ( !$user_id )
+		$user_id = $bp->loggedin_user->id;
+		
+	/* Add to the users liked activities. */
+	$user_likes = get_user_meta( $user_id, 'bp_liked_images', true );
+	$user_likes[$image_id] = 'image_liked';
+	update_user_meta( $user_id, 'bp_liked_images', $user_likes );
+	$image = new BP_Gallplus_Image($image_id);
+	$image->like_count++;
+	$image->save();
+	return $image->like_count;
+}
 /**
  * bp_gallplus_like_process_ajax()
  *
@@ -1409,6 +1494,10 @@ function bp_gallplus_like_process_ajax() {
 	if ( $_POST['type'] == 'like_album' )
 	{
 		echo(bp_gallplus_album_add_like( $id ));
+	}
+	if ( $_POST['type'] == 'like_image' )
+	{
+		echo(bp_gallplus_image_add_like( $id ));
 	}
 	
 /*	if ( $_POST['type'] == 'unlike' )
@@ -1483,26 +1572,24 @@ function bp_gallplus_like_button( $id = '', $type = '' ) {
 				$liked_count = $album->like_count;
 			
 			if ( !bp_gallplus_like_is_liked( $id, 'album' ) ) : ?>
-				<a href="#" class="like_album" id="like-album-<?php echo $id; ?>" title="like this album"><img src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsm.png" /><?php  if ( $liked_count ) echo ' (' . $liked_count . ')'; ?></a>
+				<span><a href="#" class="like_album" id="like-album-<?php echo $id; ?>" title="like this album"><img src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsm.png" /><?php  if ( $liked_count ) echo '<span>[' . $liked_count . ']</span>'; ?></a></span>
 			<?php else : ?>
-				<img class="liked_album" src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsmgray.png" alt="You already like this album"/><?php  if ( $liked_count ) echo ' (' . $liked_count . ')'; ?>
+				<span><img class="liked_album" src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsmgray.png" alt="You already like this album"/><?php  if ( $liked_count ) echo ' <span>[' . $liked_count . ']</span>'; ?></span>
 			<?php endif;
 			
 		endif;
 	
 	elseif ( $type == 'image' ) :
+		$image = new BP_Gallplus_Image($id);
+		$liked_count = $image->like_count;
 		
-		if ( is_user_logged_in() && get_post_meta( $id, 'liked_count', true ) ) {
-			$liked_count = count( get_post_meta( $id, 'liked_count', true ) );
-		}
+		if ( !bp_gallplus_like_is_liked( $id, 'image' ) ) : ?>
 		
-		if ( !bp_like_is_liked( $id, 'blogpost' ) ) : ?>
-		
-		<div class="like-box"><a href="#" class="like_blogpost" id="like-blogpost-<?php echo $id; ?>" title="<?php echo bp_like_get_text( 'like_this_item' ); ?>"><?php echo bp_like_get_text( 'like' ); if ( $liked_count ) echo ' (' . $liked_count . ')'; ?></a></div>
+				<!-- span><img src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsm.png" class="like_image" id="like-image-<?php echo $id; ?>" alt="Like this image"/><?php  if ( $liked_count ) echo '<span style="vertical-align: top;">[' . $liked_count . ']</span>'; ?></span -->
+				<span><a href="#" class="like_image" id="like-album-<?php echo $id; ?>" title="like this image"><img src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsm.png" /></a><?php  if ( $liked_count ) echo '<span style="vertical-align: bottom;">[' . $liked_count . ']</span>';else echo '<span style="vertical-align: bottom;">&nbsp;</span>' ?></span>
 		
 		<?php else : ?>
-		
-		<div class="like-box"><a href="#" class="unlike_blogpost" id="unlike-blogpost-<?php echo $id; ?>" title="<?php echo bp_like_get_text( 'unlike_this_item' ); ?>"><?php echo bp_like_get_text( 'unlike' ); if ( $liked_count ) echo ' (' . $liked_count . ')'; ?></a></div>
+				<span><img class="liked_image" src="<?php echo BP_GALLPLUS_PLUGIN_URL ?>includes/images/thumbsupsmgray.png" alt="You already like this image"/><?php  if ( $liked_count ) echo '<span >['.$liked_count.']</span>'; ?></span>
 		<?php endif;
 
 	endif;
@@ -1607,9 +1694,71 @@ function bp_gallplus_privacy($album_id=false){
 
 
 
+function bp_gallplus_member_groups($user_id = false)
+{	
+	global $wpdb, $bp;
+	if(!$user_id)
+	{
+		return false;
+	}
+	$results = BP_Groups_Member::get_group_ids( $user_id ); 
+	$first = true;
+	if($results['total'] > 0)
+	{
+		for($i=0; $i < $results['total']; $i++)
+		{
+			$group_id = $results['groups'][$i];
+			$sql = $wpdb->prepare( "SELECT id, title FROM {$bp->album->albums_table_name} WHERE group_id = %d AND privacy = %d",$group_id,5) ;
+			$locNames  = $wpdb->get_results( $sql );
+			if($first)
+			{
+				$albumNames = $locNames;
+			}
+			else
+			{
+				$albumNames = array_merge($albumNames, $locNames);
+			}
+		}
+		if(count( $albumNames) > 0)
+		{
+			return $albumNames;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 
+}
 
+function bp_gallplus_group_has_album($group_id = false)
+{	
+	if(!$group_id)
+	{
+		return false;
+	}
 
+	$results = BP_Gallplus_Album::query_group_album($group_id,5);
+	if(count($results))
+	{
+		return true;
+	}
+	return false;
+}
+
+function bp_gallplus_nav_album_count(){
+    
+	global $bp;
+	
+	$owner_id = $bp->displayed_user->id;
+	
+	$results = BP_Gallplus_Album::query_images(array('owner_id'=> $owner_id, 'privacy'=>'all', 'priv_override'=>true));
+	return count($results);
+}
 
 
 

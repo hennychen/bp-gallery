@@ -4,8 +4,9 @@
 				<h1> Latest Albums </h1>
 <?php 		$album_args = array(
 								'all_albums' => true,
-								'order_key' => 'date_created');
-					bp_gallplus_query_albums($album_args);?>
+								'orderkey' => 'date_created');
+						bp_gallplus_query_albums($album_args);
+					?>
 
   				<?php if ( bp_gallplus_has_albums() ) : ?>
 						<div class="image-pagination">

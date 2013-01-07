@@ -789,10 +789,21 @@ display: none;
 }
 .like_album{
 /*		background: url(thumbsupsm.png) 0% bottom no-repeat; */
+		vertical-align : middle;
 }
 .liked_album{
 /*		background: url(thumbsupsm.png) 0% bottom no-repeat;*/
 		opacity : 0.4;
+		vertical-align : middle;
+}
+.liked_image{
+/*		background: url(thumbsupsm.png) 0% bottom no-repeat;*/
+		opacity : 0.4;
+		vertical-align : middle;
+}
+.like_image{
+/*		background: url(thumbsupsm.png) 0% bottom no-repeat;*/
+		vertical-align : middle;
 }
 
 #loadmask {
@@ -854,4 +865,11 @@ display: none;
 }
 .fancybox-title {
 	height: 24px;
+}
+.group-image table td tr{
+	padding: 0px;
+}
+
+table td.group-image{
+	padding: 0px;
 }

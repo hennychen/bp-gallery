@@ -71,8 +71,21 @@ function bp_gallplus_show_albums() {
 	if(isset($bp->action_variables[0]))
 	{
 		$locAlbumID = $bp->action_variables[0];
-		$album_args = array(
+		$album = new BP_Gallplus_Album( $locAlbumID );
+			// Now need to retrieve the privacy and group level
+			if((($album->owner_type == 'admin') && is_super_admin()) || ($album->owner_type == 'group'))
+			{
+					$album_args = array(
+								'album_id' => $locAlbumID,
+								'privacy'=>'group_gallery');
+			}
+			else
+			{
+				$album_args = array(
 								'album_id' => $locAlbumID);
+			}
+//		$album_args = array(
+//								'album_id' => $locAlbumID);
 		if(isset($bp->action_variables[1]))
 		{
 			$locPage = $bp->action_variables[1];
@@ -304,8 +317,19 @@ function bp_gallplus_screen_images() {
 	if(isset($bp->action_variables[0]))
 	{
 		$locAlbumID = $bp->action_variables[0];
-		$album_args = array(
+		$album = new BP_Gallplus_Album( $locAlbumID );
+			// Now need to retrieve the privacy and group level
+			if((($album->owner_type == 'admin') && is_super_admin()) || ($album->owner_type == 'group'))
+			{
+					$album_args = array(
+								'album_id' => $locAlbumID,
+								'privacy'=>'group_gallery');
+			}
+			else
+			{
+				$album_args = array(
 								'album_id' => $locAlbumID);
+			}
 		bp_gallplus_query_images($album_args);
 //		bp_gallplus_the_album($locAlbumID);
 		bp_core_load_template( apply_filters( 'bp_gallplus_template_screen_images', 'album/albumcontent' ) );
@@ -389,8 +413,9 @@ function bp_gallplus_screen_upload_content() {
 	{
 		$priv_str = array(
 			2 => __('Registered members','bp-galleries-plus'),
-			3 => __('Group Members','bp-galleries-plus'),
+			3 => __('Group Members can view','bp-galleries-plus'),
 			4 => __('Only friends','bp-galleries-plus'),
+			5 => __('Group Members can view and add','bp-galleries-plus'),
 			6 => __('Private','bp-galleries-plus'),
 			10 => __('Hidden (admin only)','bp-galleries-plus')
 		);
@@ -400,8 +425,9 @@ function bp_gallplus_screen_upload_content() {
 		$priv_str = array(
 			0 => __('Public','bp-galleries-plus'),
 			2 => __('Registered members','bp-galleries-plus'),
-			3 => __('Group Members','bp-galleries-plus'),
+			3 => __('Group Members can view','bp-galleries-plus'),
 			4 => __('Only friends','bp-galleries-plus'),
+			5 => __('Group Members can view and add','bp-galleries-plus'),
 			6 => __('Private','bp-galleries-plus'),
 			10 => __('Hidden (admin only)','bp-galleries-plus')
 		);
@@ -412,6 +438,7 @@ function bp_gallplus_screen_upload_content() {
 	$loc_album->owner_type = 'user';
 
 	$albums = $loc_album->query_album_names();
+	$groupAlbums =  bp_gallplus_member_groups($bp->loggedin_user->id);
 	if( ($limit_info['all']['enabled'] == true) && ($limit_info['all']['remaining'] > 0) ):?>
 
 	<h4><?php _e( 'Upload new photos', 'bp-galleries-plus' ) ?></h4>
@@ -432,15 +459,30 @@ function bp_gallplus_screen_upload_content() {
 		echo "\n<p><label>";
 					_e('Select Album', 'bp-galleries-plus' );
 					echo "\n".'	<SELECT NAME="selected_album" id="selected_album">'."\n";
-					echo "<OPTION>\n";
+					echo "<OPTION VALUE=0></OPTION>\n";
 					foreach( $albums as $album)
 					{
-						echo '<OPTION VALUE="'.$album->id.'">'.$album->title."\n";
+						echo '<OPTION VALUE="'.$album->id.'">'.$album->title."</OPTION>\n";
+					}
+					echo "</SELECT>\n<br />";
+					_e('Or', 'bp-galleries-plus' );
+				echo "</label></p>\n";
+	}
+	 if($groupAlbums)
+	{
+		echo "\n<p><label>";
+					_e('Select Group Album', 'bp-galleries-plus' );
+					echo "\n".'	<SELECT NAME="selected_group_album" id="selected_group_album">'."\n";
+					echo "<OPTION VALUE=0></OPTION>\n";
+					foreach( $groupAlbums as $album)
+					{
+						echo '<OPTION VALUE="'.$album->id.'">'.$album->title."</OPTION>\n";
 					}
 					echo "</SELECT>\n<br />";
 					_e('Or', 'bp-galleries-plus' );
 				echo "</label></p>\n";
 	}?>
+
 
    <p>
 	<label><?php _e('Enter Album Name', 'bp-galleries-plus' ) ?><br />
@@ -451,16 +493,19 @@ function bp_gallplus_screen_upload_content() {
 	<label><?php _e('Select Image to Upload *', 'bp-galleries-plus' ) ?><br />
 	<input type="file" value="" name="upload[]" multiple id="file"/></label>
     </p>
-    <p>
+    <p id="album_visibility">
 	<label><?php _e('Visibility','bp-galleries-plus') ?></label>
 
 			<?php $checked=false;
 				$groups_array = BP_Groups_Member::get_is_admin_of($owner_id);
 				$group_count = $groups_array['total'];
 				foreach($priv_str as $k => $str){
-					if($limit_info[$k]['enabled']) {?>
-				
-			<label><input type="radio" id="priv_<?php echo $k ?>"name="privacy" value="<?php echo $k ?>" <?php
+					if($limit_info[$k]['enabled']) {
+						if($k == 5) :?>
+							<label style="display:none"><input type="radio" id="priv_<?php echo $k ?>"name="privacy" value="<?php echo $k ?>"
+						<?php else: ?>
+							<label><input type="radio" id="priv_<?php echo $k ?>"name="privacy" value="<?php echo $k ?>" 
+						<?php endif;
 				if(!$checked){
 					 echo 'checked="checked" ';
 					 $checked = true;
@@ -488,7 +533,7 @@ function bp_gallplus_screen_upload_content() {
 				}
 				else
 				{
-					if (!$limit_info[$k]['current'] && !$limit_info[$k]['remaining'])
+					if ($limit_info[$k]['current'] && !$limit_info[$k]['remaining'])
 						echo 'disabled="disabled" />'.$str.' '.__( '(limit reached)', 'bp-galleries-plus' );
 					else
 						echo '/>'.$str;
@@ -530,16 +575,21 @@ function bp_gallplus_action_upload() {
 	
 	$notify_activity = false;
 
-
-	if ( $bp->current_component == $bp->album->slug && $bp->album->upload_slug == $bp->current_action && isset( $_POST['submit'] )) {
-	
+	if (( $bp->current_component == $bp->album->slug && $bp->album->upload_slug == $bp->current_action && isset( $_POST['submit'] )) || 
+			(	$bp->current_component == $bp->album->group_slug && $bp->current_action == $bp->album->group_gallery_slug)&& isset( $_POST['submit'] ))
+	{
+//bp_logdebug('bp_gallplus_action_upload : start');	
 		check_admin_referer('bp-galleries-plus-upload');
 		
 		$error_flag = false;
 		$feedback_message = array();
+			if( !isset($_POST['album_name']) ){
+					$album_name = 'default';
+			}
 
 		if( !isset($_POST['privacy']) ){
 			$error_flag = true;
+//bp_logdebug('bp_gallplus_action_upload : privacy');	
 			$feedback_message[] = __( 'Please select a privacy option.', 'bp-galleries-plus' );
 
 		} else {
@@ -569,6 +619,7 @@ function bp_gallplus_action_upload() {
 			if($priv_lvl == 3){
 				if( !isset($_POST['selected_group']) ){
 					$error_flag = true;
+//bp_logdebug('bp_gallplus_action_upload : group');	
 					$feedback_message[] = __( 'Please select a group for this album.', 'bp-galleries-plus' );
 				}
 				else
@@ -579,6 +630,7 @@ function bp_gallplus_action_upload() {
 
 			if( $pic_limit === null){
 				$error_flag = true;
+//bp_logdebug('bp_gallplus_action_upload : pic_limit');	
 				$feedback_message[] = __( 'Privacy option is not correct.', 'bp-galleries-plus' );	
 			}			
 			elseif( $pic_limit !== false && ( $pic_limit === 0  || $pic_limit <= bp_gallplus_get_image_count(array('privacy'=>$priv_lvl)) ) ) {
@@ -617,6 +669,11 @@ function bp_gallplus_action_upload() {
 				$album_id = $_POST['selected_album'];
 			// Update the album's privacy level as well as the privacy level of the images within it	
 		}
+		else if(isset($_POST['selected_group_album']) && ($_POST['selected_group_album']) ){
+//bp_logdebug('bp_gallplus_action_upload : should be here : '.$_POST['selected_group_album']);	
+				$album_id = $_POST['selected_group_album'];
+			// Update the album's privacy level as well as the privacy level of the images within it	
+		}
 		else
 		{
 			if( !isset($_POST['album_name']) ){
@@ -630,8 +687,15 @@ function bp_gallplus_action_upload() {
 		}
 		if($album_id)
 		{
+			// update_privacy will not update if album owner_type is set to group or admin
 			bp_gallplus_update_privacy($album_id,$priv_lvl,$group_id);
 			$album = new BP_Gallplus_Album( $album_id );
+			// Now need to retrieve the privacy and group level
+			if(($album->owner_type == 'admin') || ($album->owner_type == 'group'))
+			{
+				$priv_lvl	 = $album->privacy;
+				$group_id = $album->group_id;
+			}
 			// Set image privacy level to album privacy level
 			$files=array();
 			if ( isset($_FILES['upload']) )
@@ -681,7 +745,7 @@ function bp_gallplus_action_upload() {
 					}
 
 					add_filter( 'upload_dir', 'bp_gallplus_upload_dir', 10, 0 );
-
+  
 					$pic_org = wp_handle_upload( $file,array('test_form' => false,'action'=>'image_upload') );
 
 
@@ -842,7 +906,12 @@ function bp_gallplus_action_upload() {
 		if ($error_flag){
 			bp_core_add_message( implode('&nbsp;', $feedback_message ),'error');
 		} 
-		else {
+		else 
+		{
+			// Set the date updated
+			$album->date_updated = gmdate( "Y-m-d H:i:s" );
+   		$album->save();
+			
 			if ($notify_activity)
 			{
 				bp_gallplus_record_album_activity($album);
@@ -851,8 +920,19 @@ function bp_gallplus_action_upload() {
 			{
 				bp_gallplus_record_album_activity($album,true);
 			}
+			if($album->owner_type == 'group')
+			{
+				bp_gallplus_record_group_album_activity($group_id,$id); 
+			}
 			bp_core_add_message( implode('&nbsp;', $feedback_message ),'success' );
-			bp_core_redirect( $bp->loggedin_user->domain . $bp->current_component . '/?album_id='. $album->id);
+			if(isset($_POST['group_name']))
+			{
+				bp_core_redirect( get_site_url() .'/'. $bp->current_component . '/'.$_POST['group_name'].'/'.$bp->album->group_gallery_slug);
+			}
+			else
+			{
+				bp_core_redirect( $bp->loggedin_user->domain . $bp->current_component . '/?album_id='. $album->id);
+			}
 //			bp_core_redirect( $bp->loggedin_user->domain . $bp->current_component . '/'.$bp->album->album_slug.'/?album_id='. $album->id);
 //			bp_core_redirect( $bp->loggedin_user->domain . $bp->current_component . '/'.$bp->album->single_slug.'/' . $id.'/'.$bp->album->edit_slug.'/');
 			die;
@@ -1093,27 +1173,6 @@ function bp_gallplus_screen_add_album_content() {
 
 	$limit_info = bp_gallplus_limits_info();
 
-	if($bp->bp_gallplus_disable_public_access)
-	{
-		$priv_str = array(
-			2 => __('Registered members','bp-galleries-plus'),
-			3 => __('Group Members','bp-galleries-plus'),
-			4 => __('Only friends','bp-galleries-plus'),
-			6 => __('Private','bp-galleries-plus'),
-			10 => __('Hidden (admin only)','bp-galleries-plus')
-		);
-	}
-	else
-	{
-		$priv_str = array(
-			0 => __('Public','bp-galleries-plus'),
-			2 => __('Registered members','bp-galleries-plus'),
-			3 => __('Group Members','bp-galleries-plus'),
-			4 => __('Only friends','bp-galleries-plus'),
-			6 => __('Private','bp-galleries-plus'),
-			10 => __('Hidden (admin only)','bp-galleries-plus')
-		);
-	}
 
 	?>
 
@@ -1286,6 +1345,7 @@ function bp_gallplus_screen_visibility($group_id = 0,$image_edit = false){
 			2 => __('Registered members','bp-galleries-plus'),
 			3 => __('Group Members','bp-galleries-plus'),
 			4 => __('Only friends','bp-galleries-plus'),
+			5 => __('Group Members can view and add','bp-galleries-plus'),
 			6 => __('Private','bp-galleries-plus'),
 			10 => __('Hidden (admin only)','bp-galleries-plus')
 		);
@@ -1297,6 +1357,7 @@ function bp_gallplus_screen_visibility($group_id = 0,$image_edit = false){
 			2 => __('Registered members','bp-galleries-plus'),
 			3 => __('Group Members','bp-galleries-plus'),
 			4 => __('Only friends','bp-galleries-plus'),
+			5 => __('Group Members can view and add','bp-galleries-plus'),
 			6 => __('Private','bp-galleries-plus'),
 			10 => __('Hidden (admin only)','bp-galleries-plus')
 		);

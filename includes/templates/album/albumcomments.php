@@ -6,7 +6,7 @@
 
 			<li class="<?php bp_activity_css_class() ?>" id="activity-<?php bp_activity_id() ?>">
 		
-				<div class="activity-content">
+				<div class="album-activity-content">
 					<div class="activity-meta">
 						<?php if ( is_user_logged_in() && bp_activity_can_comment() ) : ?>
                <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf( __( 'Comment <span>%s</span>', 'buddypress' ), bp_activity_get_comment_count() ); ?></a>
@@ -36,7 +36,7 @@
  
 				<?php if ( ( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count() ) : ?>
  
-	    		<div class="activity-comments">
+	    		<div class="album-activity-comments">
  
   	      	<?php bp_activity_comments(); ?>
  

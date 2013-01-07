@@ -32,6 +32,7 @@ class BP_Gallplus_Template {
 	var $pag_per_page;
 	var $pag_links;
 	var $album_pag_links;
+	var $group_album_pag_links;
 	var $pag_links_global;
 	var $album_id;
 	
@@ -45,6 +46,7 @@ class BP_Gallplus_Template {
 		
 		$defaults = bp_gallplus_default_query_args();
 		$r = apply_filters('bp_gallplus_template_args',wp_parse_args( $args, $defaults ));
+//bp_logdebug('BP_Gallplus_Template : '.print_r($r,true));
 
 		extract( $r , EXTR_SKIP);
 
@@ -53,6 +55,10 @@ class BP_Gallplus_Template {
 		$this->owner_id = $owner_id;
 		$this->privacy= $privacy;
 		$this->album_id = $album_id;
+		if ($this->privacy == 'group_gallery')
+		{
+			$r['owner_id']=false;
+		}
 
 		$total = bp_gallplus_get_image_count($r);
 		$this->images = bp_gallplus_get_images($r);
@@ -88,6 +94,16 @@ class BP_Gallplus_Template {
 			'next_text' => '&rarr;',
 			'mid_size' => 1
 		));
+		$this->group_album_pag_links = paginate_links( array(
+			'base' => bp_gallplus_get_group_album_url().'/%_%',
+			'format' => '%#%',
+			'total' => ceil( (int) $this->total_image_count / (int) $this->pag_per_page ),
+			'current' => (int) $this->pag_page,
+			'prev_text' => '&larr;',
+			'next_text' => '&rarr;',
+			'mid_size' => 1
+		));
+
 		$this->pag_links = paginate_links( array(
 			'base' => $bp->displayed_user->domain . $bp->album->slug .'/'. $bp->album->images_slug .'/%_%',
 			'format' => '%#%',
@@ -185,6 +201,7 @@ class BP_Gallplus_Template {
 function bp_gallplus_query_images( $args = '' ) {
     
 	global $images_template;
+//bp_logdebug('bp_gallplus_query_images : '.print_r($args,true));
 
 	$images_template = new BP_Gallplus_Template( $args );
 
@@ -634,6 +651,34 @@ function bp_gallplus_album_content_pagination($always_show = false) {
 		if ($always_show || $images_template->total_image_count > $images_template->pag_per_page)
 		return apply_filters( 'bp_gallplus_get_image_pagination', $images_template->album_pag_links );
 	}
+	
+/**
+ * bp_gallplus_group_album_pagination()
+ * 
+ * @version 0.1.8.11
+ * @since 0.1.8.0
+ */
+function bp_gallplus_group_album_pagination($always_show = false) {
+	echo bp_gallplus_get_group_album_pagination($always_show);
+}
+	function bp_gallplus_get_group_album_pagination($always_show = false) {
+	    
+		global $bp, $images_template;
+		
+		$group_id = $images_template->images[0]->group_id;		
+		$group = groups_get_group( array( 'group_id' => $group_id ) );
+		$images_template->group_album_pag_links = paginate_links( array(
+			'base' => '/'.$bp->groups->slug .'/'. $group->slug .'/gallery/%_%',
+			'format' => '%#%',
+			'total' => ceil( (int) $images_template->total_image_count / (int) $images_template->pag_per_page ),
+			'current' => (int) $images_template->pag_page,
+			'prev_text' => '&larr;',
+			'next_text' => '&rarr;',
+			'mid_size' => 1
+		));		
+		if ($always_show || $images_template->total_image_count > $images_template->pag_per_page)
+		return apply_filters( 'bp_gallplus_get_image_pagination', $images_template->group_album_pag_links );
+	}
 
 /**
  * bp_gallplus_adjacent_links()
@@ -893,6 +938,23 @@ function bp_gallplus_image_group_id() {
 		global $images_template;
 		return apply_filters( 'bp_gallplus_get_group_id', $images_template->image->group_id );
 	}
+	
+/**
+ * bp_gallplus_image_owner_profile_link()
+ * 
+ * @version 0.1.8.11
+ * @since 0.1.8.0
+ */
+ function bp_gallplus_image_owner_profile_link() {
+       echo bp_gallplus_image_get_owner_profile_link();
+ }
+ 
+ 
+function bp_gallplus_image_get_owner_profile_link() {
+   global $bp, $images_template;
+   
+   return apply_filters( 'bp_get_member_permalink', bp_core_get_userlink( $images_template->image->owner_id, false, false, true ) );
+}
 
 class BP_Gallplus_Album_Template {
     
@@ -1235,6 +1297,25 @@ function bp_gallplus_album_url() {
 //		return apply_filters( 'bp_gallplus_get_image_url', $owner_domain . $bp->album->slug . '/'.$albums_template->album->id  . '/');
 //		return apply_filters( 'bp_gallplus_get_image_url', $owner_domain . $bp->album->slug . '/?album_id='.$albums_template->album->id);
 	}
+/**
+ * bp_gallplus_album_url()
+ * 
+ * @version 0.1.8.11
+ * @since 0.1.8.0
+ */
+function bp_gallplus_group_album_url() {
+	echo bp_gallplus_get_group_album_url();
+}
+	function bp_gallplus_get_group_album_url() {
+	    
+		global $bp,$albums_template;
+
+		$group_id = $albums_template->album->group_id;
+		$group = groups_get_group( array( 'group_id' => $group_id ) );
+		return apply_filters( 'bp_gallplus_get_image_url', $bp->groups->slug . '/' . $group->slug.'/gallery/');
+//		return apply_filters( 'bp_gallplus_get_image_url', $owner_domain . $bp->album->slug . '/'.$albums_template->album->id  . '/');
+//		return apply_filters( 'bp_gallplus_get_image_url', $owner_domain . $bp->album->slug . '/?album_id='.$albums_template->album->id);
+	}
 
 /**
  * bp_gallplus_album_edit_link()
@@ -1306,6 +1387,7 @@ function bp_gallplus_album_priv_info() {
 		{
 			case 0: $loc_priv_txt = 'Public'; break;
 			case 2: $loc_priv_txt = 'Registered members'; break;
+			case 5: $loc_priv_txt = 'Group Gallery'; break;
 			case 3: $loc_priv_txt = 'Group Members';
 /*					$groups_array = BP_Groups_Member::get_is_admin_of($albums_template->album->owner_id);
 					$group_count = $groups_array['total'];
@@ -1886,4 +1968,25 @@ function bp_gallplus_total_album_image_count() {
 				$result = $wpdb->get_var( $sql );
 				return apply_filters( 'bp_gallplus_total_album_image_count', $result );
 	}
+function bp_gallplus_image_viewer_attribute(){
+	echo bp_gallplus_get_image_viewer_attribute();
+}
+
+function bp_gallplus_get_image_viewer_attribute()
+{
+	$bp_gallplus_viewer = get_option('bp_gallplus_viewer');
+	switch($bp_gallplus_viewer)
+	{
+			case 0: $classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';
+							break;
+			case 1: $classStr = 'class="thickbox"';
+							break;
+			case 2: $classStr = ''; // colorbox is automatic
+							break;
+			case 3: $classStr = 'rel="lightbox"';
+							break;
+			default: $classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';																									
+	}
+	return $classStr;
+}
 ?>

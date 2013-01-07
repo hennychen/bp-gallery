@@ -1,9 +1,9 @@
-		$(document).ready(function() {
+		jQuery(document).ready(function() {
 			/*
 			 *  Simple image gallery. Uses default settings
 			 */
 			var largeURL;
-			$('.fancybox').fancybox({ beforeShow : function() {         
+			jQuery('.fancybox').fancybox({ beforeShow : function() {         
             if (this.title) {
                 // New line
                 this.title += '<br />';
@@ -30,7 +30,7 @@
 			 */
 
 			// Change title type, overlay closing speed
-			$(".fancybox-effects-a").fancybox({
+			jQuery(".fancybox-effects-a").fancybox({
 				helpers: {
 					title : {
 						type : 'outside'
@@ -42,7 +42,7 @@
 			});
 
 			// Disable opening and closing animations, change title type
-			$(".fancybox-effects-b").fancybox({
+			jQuery(".fancybox-effects-b").fancybox({
 				openEffect  : 'none',
 				closeEffect	: 'none',
 
@@ -54,7 +54,7 @@
 			});
 
 			// Set custom style, close if clicked, change title type and overlay color
-			$(".fancybox-effects-c").fancybox({
+			jQuery(".fancybox-effects-c").fancybox({
 				wrapCSS    : 'fancybox-custom',
 				closeClick : true,
 
@@ -73,7 +73,7 @@
 			});
 
 			// Remove padding, set opening and closing animations, close if clicked and disable overlay
-			$(".fancybox-effects-d").fancybox({
+			jQuery(".fancybox-effects-d").fancybox({
 				padding: 0,
 
 				openEffect : 'elastic',
@@ -93,7 +93,7 @@
 			 *  Button helper. Disable animations, hide close button, change title type and content
 			 */
 
-			$('.fancybox-buttons').fancybox({
+			jQuery('.fancybox-buttons').fancybox({
 				openEffect  : 'none',
 				closeEffect : 'none',
 
@@ -119,7 +119,7 @@
 			 *  Thumbnail helper. Disable animations, hide close button, arrows and slide to next gallery item if clicked
 			 */
 
-			$('.fancybox-thumbs').fancybox({
+			jQuery('.fancybox-thumbs').fancybox({
 				prevEffect : 'none',
 				nextEffect : 'none',
 
@@ -138,7 +138,7 @@
 			/*
 			 *  Media helper. Group items, disable animations, hide arrows, enable media and button helpers.
 			*/
-			$('.fancybox-media')
+			jQuery('.fancybox-media')
 				.attr('rel', 'media-gallery')
 				.fancybox({
 					openEffect : 'none',
@@ -157,20 +157,20 @@
 			 *  Open manually
 			 */
 
-			$("#fancybox-manual-a").click(function() {
-				$.fancybox.open('1_b.jpg');
+			jQuery("#fancybox-manual-a").click(function() {
+				jQuery.fancybox.open('1_b.jpg');
 			});
 
-			$("#fancybox-manual-b").click(function() {
-				$.fancybox.open({
+			jQuery("#fancybox-manual-b").click(function() {
+				jQuery.fancybox.open({
 					href : 'iframe.html',
 					type : 'iframe',
 					padding : 5
 				});
 			});
 
-			$("#fancybox-manual-c").click(function() {
-				$.fancybox.open([
+			jQuery("#fancybox-manual-c").click(function() {
+				jQuery.fancybox.open([
 					{
 						href : '1_b.jpg',
 						title : 'My title'

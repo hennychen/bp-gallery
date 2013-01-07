@@ -3,8 +3,8 @@
 Plugin Name: BP Gallery Plus
 Plugin URI: http://www.amkd.com.au/wordpress/bp-gallery-plugin/98
 Description: Based on the orginal BP Photos+tags by Jesse Lareaux. This plugin enables users on a BuddyPress site to create multiple albums. Albums can be given the usual privacy restrictions, with the addition of giving Album access to members of a group they have created.
-Version: 1.2.3
-Revision Date: December 17, 2012
+Version: 1.2.4
+Revision Date: January 8, 2013
 Requires at least: 3.1
 Tested up to: WP 3.5, BP 1.6.2
 Author: Caevan Sachinwalla
@@ -47,8 +47,10 @@ function bp_gallplus_install(){
 		if(CheckNewAlbumsTableExists() )
 		{
 			// If the New Albums table exists we can assume the installation has the renamed tables
-  		bp_logdebug('bp_gallplus_install() New table names exist');  
-
+			if(CheckNewAlbumsTableExists())
+			{
+				AddNewAlbumTableFields();				
+			}
 			return;
 		}
 
@@ -61,7 +63,6 @@ function bp_gallplus_install(){
     		return;
 			}
 			// This is an old installation of BP Gallery Plus and needs to have the tables renamed
-  		bp_logdebug('bp_gallplus_install() New table names do not exist. Old table names exist so renaming');  
 			$reanmeSql = "RENAME TABLE `".$wpdb->base_prefix."bp_album` TO `".$wpdb->base_prefix."bp_gallplus_album`";
 			if ($mysqli->query($reanmeSql) === TRUE) 
 			{
@@ -81,7 +82,6 @@ function bp_gallplus_install(){
 			return;
 		}
 		// Since BP Gallery Plus has not been installed on the installation before we can create new albums
-  		bp_logdebug('bp_gallplus_install() Fresh Install');  
     $sql[] = "CREATE TABLE {$wpdb->base_prefix}bp_gallplus_album (
 	            id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	            owner_type varchar(10) NOT NULL,
@@ -100,6 +100,7 @@ function bp_gallplus_install(){
   						like_count bigint(20) default '0',
   						feature_image tinyint(1) default NULL,
 	  					group_id bigint(20) NOT NULL default '0',
+	  					media_type int(11) default '0',
             	KEY owner_type (owner_type),
 	            KEY owner_id (owner_id),
 	            KEY album_id (album_id),
@@ -144,9 +145,7 @@ function bp_gallplus_install(){
 
 // JLL_MOD - add a table for face-tagging
 	dbDelta($sql);
-bp_logdebug('bp_gallplus_install : creating album database : '.print_r($sql,true));
 	dbDelta($sqlalbums);
-bp_logdebug('bp_gallplus_install : creating albums database : '.print_r($sqlalbums,true));
 	dbDelta($sqltag);
 
 	update_site_option( 'bp-galleries-plus-db-version', BP_GALLPLUS_DB_VERSION  );
@@ -232,7 +231,6 @@ function bp_gallplus_check_installed() {
 
 	if ( get_site_option( 'bp-galleries-plus-db-version' ) < BP_GALLPLUS_DB_VERSION )
 	{
-	bp_logdebug('bp_gallplus_check_installed : b4 ALBUM INSTALL');
 		bp_gallplus_install();
 	}
 }
@@ -265,7 +263,6 @@ function bp_gallplus_compatibility_notices() {
  *  @since 0.1.8.0
  */
 function bp_gallplus_activate() {
-bp_logdebug('bp_gallplus_activate : start');
 	bp_gallplus_check_installed();
 		AddDonationProfileField();
 	do_action( 'bp_gallplus_activate' );
@@ -305,7 +302,6 @@ function AddDonationProfileField()
     	 );
   $sqlStr = "SELECT `id` FROM `wp_bp_xprofile_groups` WHERE `name` = 'BP Gallery Plus'";
   $groups = $wpdb->get_results($sqlStr);
-  bp_logdebug('BP Gallery Plus : sqlStr: '.$sqlStr);  
   if(count($groups) > 0)
   {
   	bp_logdebug('BP Gallery Plus : Donation group exists : ');
@@ -330,7 +326,6 @@ function CheckNewAlbumTableExists()
 	global $wpdb;
 	
 	$sqlStr = 'select 1 from `'.$wpdb->base_prefix.'bp_gallplus_album`'; 
-  bp_logdebug('BP Gallery Plus CheckNewAlbumTableExists : sqlStr: '.$sqlStr);  
 	$val = mysql_query($sqlStr);
 	if($val !== FALSE)
 	{
@@ -357,6 +352,22 @@ function CheckOldAlbumTableExists()
     return false;
 	}
 }
+function AddNewAlbumTableFields()
+{
+	global $wpdb;
+	
+	$fields = mysql_list_fields(DB_NAME, $wpdb->base_prefix.'bp_gallplus_album');
+	$columns = mysql_num_fields($fields);
+	for ($i = 0; $i < $columns; $i++) 
+	{
+		$field_array[] = mysql_field_name($fields, $i);
+	}
+	if (!in_array('media_type', $field_array))
+	{
+		$result = mysql_query('ALTER TABLE '. $wpdb->base_prefix.'bp_gallplus_album ADD media_type INT(11)');
+	}
+}
+
 function CheckNewAlbumsTableExists()
 {
 	global $wpdb;
@@ -419,7 +430,6 @@ function CheckOldAlbumTagTableExists()
 }
 function BPGPlusTransferOptions()
 {
-	    		bp_logdebug("BPGPlusTransferOptions: Transfering options");
 
         $bp_gallplus_slug = get_site_option( 'bp_album_slug' );
         $bp_gallplus_max_pictures = get_site_option( 'bp_album_max_pictures' );

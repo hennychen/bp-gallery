@@ -31,7 +31,15 @@ jQuery(document).ready( function() {
 			// Swap from like to unlike
 			if (type == 'like') {
 				var newID = id.replace("like", "liked");
-				jQuery('#' + id).removeClass('like_album').addClass('liked_album').attr('title', 'You like this item').attr('id', newID);
+				if(type == 'like_image')
+				{
+					jQuery('#' + id).removeClass('like_image').addClass('liked_image').attr('title', 'You like this item').attr('id', newID);
+				}
+				else
+				{
+					jQuery('#' + id).removeClass('like_album').addClass('liked_album').attr('title', 'You like this item').attr('id', newID);
+				}
+				
 			}
 						
 		});
@@ -40,8 +48,24 @@ jQuery(document).ready( function() {
 	});
 		jQuery('#selected_album').change(function() {
   	var albumID = jQuery('#selected_album').val();
+	  	jQuery('#selected_group_album').val(0);
+  		jQuery('#album_name').val('');
+			jQuery('#album_visibility').css('display','block');
+  		jQuery('#priv_2').attr('checked', 'checked');
   	BPGPLSAlbumPrivacy(albumID);
 	});
+		jQuery('#selected_group_album').change(function(){
+  		jQuery('#selected_album').val(0);
+  		jQuery('#album_name').val('');
+  		jQuery('#priv_5').attr('checked', 'checked');
+			jQuery('#album_visibility').css('display','none');
+		});
+		jQuery('#album_name').change(function(){
+  	jQuery('#selected_album').val(0);
+  	jQuery('#selected_group_album').val(0);
+			jQuery('#album_visibility').css('display','block');
+  		jQuery('#priv_2').attr('checked', 'checked');
+		});
 });
 
 	function BPGPLSDeleteAlbum(theAlbumID, theAlbumTitle)

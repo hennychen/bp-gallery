@@ -11,11 +11,9 @@ BP users can create multiple Galleries for BuddyPress. Includes Posts to Wire, M
 
 
 == Description ==
-This plugin adds full photo gallery capabilities to BuddyPress, enabling users to create multiple galleries and control the visibility of each album, with the added feature of Face-Tagging and Like.
-
-This is an early release version of the plugin. You should test it extensively before using it on a production site. It provided on an “as is” basis without any warranty. We are not liable for any damage or losses.
-
-
+This plugin adds full photo gallery capabilities to BuddyPress. Features include: Users can create multiple galleries, Gallery visibility control, Face-Tagging,
+Gallery commenting, Group Galleries (Gallery created at the time of group creation), Supports multiple image viewers (supplied with Fancybox), Images can be viewed in mid-res and full-res, Gallery "Like" button
+
 == Installation ==
 
 1. Download bpGallery from http://www.amkd.com.au/wp-content/uploads/BPGallery.zip and unzip on your local disk
@@ -25,7 +23,7 @@ This is an early release version of the plugin. You should test it extensively b
 5. You can configure which lightbox tye image viewer you want to use. Fancybox is the default and comes with the plugin. You can use Thickbox or Colorbox if you prefer.
 6. To speed up image viewing BP Gallery Plus can be configured to load the mid-sized image rather than the full size. If using Fancybox the full sized image can be viewed by clicking the "Full Size" button
 7. The plugin creates a new profile group called BPGallery and a new profile field called "Donation Link". The user just needs to add a valid Paypal donation link for a donation icon to appear at the top of each gallery
-8. If the donation link filed does not appear after the upgrade, deactivate and activate the plugin. The new field will appear.
+8. If the donation link field does not appear after the upgrade, deactivate and activate the plugin. The new field will appear.
 
 
 == Other Notes ==
@@ -78,6 +76,8 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 
 = 1.2.3 = 
 * "Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
+= 1.2.4 = 
+* "Added Group galleries, when a group is created you know have the option to add a gallery. The gallery is accessible from within the group and all group members can view and contribute to the gallery.
 
 == Upgrade Notice ==
 = 1.0 =
@@ -102,6 +102,9 @@ Admins can edit users albums and images. Image edit now possible from the Image 
 "Fixed error when loading new albums. Feature image no longer displayed in activity stream for galleries other than those marked public and registered members"
 = 1.2.3 = 
 "Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
+= 1.2.4 = 
+"Added Group galleries, when a group is created you know have the option to add a gallery. The gallery is accessible from within the group and all group members can view and contribute to the gallery.
+
 == Help Out! ==
 
 If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).

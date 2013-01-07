@@ -33,6 +33,7 @@ class BP_Gallplus_Image {
 	var	$like_count;
 	var $feature_image;
 	var $group_id;
+	var $media_type;
 
 	/**
 	 * bp_gallplus_image()
@@ -89,6 +90,7 @@ class BP_Gallplus_Image {
 	        $this->like_count = $image->like_count;
 	        $this->feature_image = $image->feature_image;
 	        $this->group_id = $image->group_id;
+	        $this->media_type = $image->media_type;
 		}
 	}
 	
@@ -111,9 +113,9 @@ class BP_Gallplus_Image {
 		do_action( 'bp_gallplus_data_before_save', $this );
 
 		if ( !$this->owner_id)
-		    
+		{		    
 			return false;
-
+		}
 		$this->title = esc_attr( strip_tags($this->title) );
 		$this->description = wp_filter_kses($this->description);
 
@@ -135,7 +137,8 @@ class BP_Gallplus_Image {
 					album_id =%s,
 					like_count = %d,
 					feature_image = %d,
-					group_id = %d
+					group_id = %d,
+					media_type = %d
 				WHERE id = %d",
 					$this->owner_type,
 					$this->owner_id,
@@ -153,6 +156,7 @@ class BP_Gallplus_Image {
 					$this->like_count,
 					$this->feature_image,
 					$this->group_id,
+					$this->media_type,
 					$this->id
 				);
 		} 
@@ -174,9 +178,10 @@ class BP_Gallplus_Image {
 						album_id,
 						like_count,
 						feature_image,
-						group_id
+						group_id,
+						media_type
 					) VALUES (
-						%s, %d, %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %d, %d, %d, %d)",
+						%s, %d, %s, %s, %s, %d, %s, %s, %s, %s, %s, %s, %d, %d, %d, %d, %d)",
 						$this->owner_type,
 						$this->owner_id,
 						$this->date_uploaded,
@@ -192,7 +197,8 @@ class BP_Gallplus_Image {
 						$this->album_id,
 						$this->like_count,
 						$this->feature_image,
-						$this->group_id
+						$this->group_id,
+						$this->media_type
 					);
 		}
 		$result = $wpdb->query( $sql );
@@ -221,6 +227,14 @@ class BP_Gallplus_Image {
 		global $wpdb, $bp;
 		
 		return $wpdb->query( $wpdb->prepare( "DELETE FROM {$bp->album->table_name} WHERE id = %d", $this->id ) );
+	}
+	
+		function query_group_image($group_id,$privacy = 5){
+		global $wpdb, $bp;
+			$sql = $wpdb->prepare( "SELECT id, title FROM {$bp->album->table_name} WHERE group_id = %d AND privacy = %d",$group_id, $privacy) ;
+//bp_logdebug('query_group_image : '.$sql);
+			$result = $wpdb->get_results( $sql );
+			return $result;
 	}
 	
 	public static function query_images($args = '',$count=false,$adjacent=false) {
@@ -273,7 +287,10 @@ class BP_Gallplus_Image {
 				else
 					return $count ? 0 : array();
 				break;
-				
+			case 'group_gallery':
+			case 5:	
+					$where .= " AND privacy = 5";
+					break;
 			case 'private':
 			case 6:
 				if (bp_gallplus_privacy_level_permitted()>=6 || $priv_override)
@@ -340,6 +357,7 @@ class BP_Gallplus_Image {
 			}
 			
 			$sql = "SELECT * FROM ".$bp->album->table_name." WHERE ".$where." ".$order." ".$limits;
+//			bp_logdebug("query_images : ".$sql);
 			$result = $wpdb->get_results( $sql );
 			// We need to any images that belong to a group the member is not a member of
 			if(!is_super_admin())
@@ -347,7 +365,7 @@ class BP_Gallplus_Image {
 				$resultCount = count($result);
 				for($i=0; $i<$resultCount; $i++)
 				{
-					if($result[$i]->privacy == 3)
+					if(($result[$i]->privacy == 3) || ($result[$i]->privacy == 5))
 					{
 						$group = new BP_Groups_Group( $result[$i]->group_id );
  						if (!bp_group_is_member($group)) {
@@ -357,7 +375,7 @@ class BP_Gallplus_Image {
 					}
 				}
 				$result = array_values($result);			
-		}
+			}
 			
 		} 
 		else {
@@ -369,11 +387,13 @@ class BP_Gallplus_Image {
 			}
 			
 			$sql =  "SELECT DISTINCT ".$select." COUNT(id) AS count FROM ".$bp->album->table_name." WHERE ".$where." ".$group;
+//			bp_logdebug("query_images  sql : $sql ");
 			if ($group)
 				$result = $wpdb->get_results( $sql );
 			else
 				$result = $wpdb->get_var( $sql );
 		}
+//			bp_logdebug("query_images : result ".print_r($result,true));
 
 		return $result;	
 	}
@@ -614,13 +634,19 @@ class BP_Gallplus_Album {
 	}
 		function query_album_names(){
 		global $wpdb, $bp;
-			$sql = $wpdb->prepare( "SELECT id, title FROM {$bp->album->albums_table_name} WHERE owner_id = %d",$this->owner_id) ;
+			$sql = $wpdb->prepare( "SELECT id, title FROM {$bp->album->albums_table_name} WHERE owner_id = %d AND owner_type != 'group'",$this->owner_id) ;
 			$result = $wpdb->get_results( $sql );
 			return $result;
 	}
 		function query_album_image_ids(){
 		global $wpdb, $bp;
 			$sql = $wpdb->prepare( "SELECT id FROM {$bp->album->table_name} WHERE album_id = %d AND owner_id = %d",$this->id,$this->owner_id) ;
+			$result = $wpdb->get_results( $sql );
+			return $result;
+	}
+		function query_group_album($group_id,$privacy = 5){
+		global $wpdb, $bp;
+			$sql = $wpdb->prepare( "SELECT id, title FROM {$bp->album->albums_table_name} WHERE group_id = %d AND privacy = %d and owner_type = 'group'",$group_id, $privacy) ;
 			$result = $wpdb->get_results( $sql );
 			return $result;
 	}
@@ -646,7 +672,10 @@ class BP_Gallplus_Album {
 		if ($id && $adjacent != 'next' && $adjacent != 'prev' && !$count){
 			$where .= $wpdb->prepare(' AND id = %d',$id);
 		}
-		
+		if($owner_type)
+		{
+			$where .= $wpdb->prepare(' AND owner_type = %s',$owner_type);
+		}
 		switch ( $privacy ) {
 			case 'public':
 			case 0 === $privacy:
@@ -676,6 +705,10 @@ class BP_Gallplus_Album {
 				else
 					return $count ? 0 : array();
 				break;
+			case 'group_gallery':
+			case 5:	
+					$where .= " AND privacy = 5";
+					break;
 				
 			case 'private':
 			case 6:
@@ -717,7 +750,7 @@ class BP_Gallplus_Album {
 			}
 			elseif(!$id){
 
-				if ($orderkey != 'id' && $orderkey != 'user_id' && $orderkey != 'status' && $orderkey != 'random') {
+				if ($orderkey != 'id' && $orderkey != 'user_id' && $orderkey != 'status' && $orderkey != 'random' && $orderkey != 'date_updated' &&  $orderkey != 'date_created' && $orderkey != 'like_count') {
 				    $orderkey = 'id';
 				}
 
@@ -743,6 +776,7 @@ class BP_Gallplus_Album {
 			}
 			
 			$sql = "SELECT * FROM ".$bp->album->albums_table_name." WHERE ".$where." ".$order." ".$limits;
+//			bp_logdebug(" album query_images : ".$sql);
 			$result = $wpdb->get_results( $sql );
 			// We need to any albums that belong to a group the member is not a member of
 			if(!is_super_admin())
@@ -750,7 +784,7 @@ class BP_Gallplus_Album {
 				$resultCount = count($result);
 				for($i=0; $i<$resultCount; $i++)
 				{
-					if($result[$i]->privacy == 3)
+					if(($result[$i]->privacy == 3) || ($result[$i]->privacy == 5)) 
 					{
 						$group = new BP_Groups_Group( $result[$i]->group_id );
  						if (!bp_group_is_member($group)) {
@@ -809,6 +843,7 @@ function bp_gallplus_default_query_args(){
 	
 	$args['owner_id'] = $bp->displayed_user->id ? $bp->displayed_user->id : false;
 	$args['id'] = false;
+	$args['owner_type'] = false;
 	$args['page']=1;
 	$args['per_page']=$bp->album->bp_gallplus_per_page;
 	$args['max']=false;

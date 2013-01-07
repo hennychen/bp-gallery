@@ -32,7 +32,7 @@
 						<?php while ( bp_gallplus_has_images() ) : bp_gallplus_the_image(); ?>
 
 				<div class="image-thumb-box">
-	                <a href="<?php bp_gallplus_image_url() ?>" class="thickbox"><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
+		             <a href="<?php get_option('bp_gallplus_mid_size') ? bp_gallplus_image_mid_url() : bp_gallplus_image_url() ?>" <?php bp_gallplus_image_viewer_attribute() ?>><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
 	                <?php if (bp_is_my_profile() || is_super_admin()) : ?>
 										<div class="block-core-ItemLinks">
 											<select onchange="var value = this.value; this.options[0].selected = true; eval(value)">
