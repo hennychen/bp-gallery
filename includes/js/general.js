@@ -9,7 +9,7 @@ jQuery(document).ready( function() {
 	// 	... 
 	// } );
 
-	jQuery('.like_album, .like_image').live('click', function() {
+	jQuery('.like_album, .like_image').on('click', function() {
 		
 		var type = jQuery(this).attr('class');
 		var id = jQuery(this).attr('id');

@@ -3,7 +3,7 @@
 Plugin Name: BP Gallery Plus
 Plugin URI: http://www.amkd.com.au/wordpress/bp-gallery-plugin/98
 Description: Based on the orginal BP Photos+tags by Jesse Lareaux. This plugin enables users on a BuddyPress site to create multiple albums. Albums can be given the usual privacy restrictions, with the addition of giving Album access to members of a group they have created.
-Version: 1.2.4
+Version: 1.2.5
 Revision Date: January 8, 2013
 Requires at least: 3.1
 Tested up to: WP 3.5, BP 1.6.2

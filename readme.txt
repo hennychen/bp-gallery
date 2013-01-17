@@ -11,9 +11,23 @@ BP users can create multiple Galleries for BuddyPress. Includes Posts to Wire, M
 
 
 == Description ==
-This plugin adds full photo gallery capabilities to BuddyPress. Features include: Users can create multiple galleries, Gallery visibility control, Face-Tagging,
-Gallery commenting, Group Galleries (Gallery created at the time of group creation), Supports multiple image viewers (supplied with Fancybox), Images can be viewed in mid-res and full-res, Gallery "Like" button
-
+This plugin adds full photo gallery capabilities to BuddyPress. 
+
+**Features:**
+
+* Members can create multiple galleries
+* Members can control visibility of each gallery
+* Face Tagging
+* Gallery commenting
+* Group Galleries (Gallery created at the time of group creation)
+* Supports multiple image viewers (supplied with Fancybox)
+* Images can be viewed in mid-res and full-res in a subsequent window
+* Images can be dynamically watermarked
+* Large image viewing with save image disabled
+* Gallery 'Like' button
+
+
+
 == Installation ==
 
 1. Download bpGallery from http://www.amkd.com.au/wp-content/uploads/BPGallery.zip and unzip on your local disk
@@ -76,8 +90,12 @@ No as BPGallery Plus will not coexist with BP Photos+Tags, it is a replacement f
 
 = 1.2.3 = 
 * "Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
+
 = 1.2.4 = 
 * "Added Group galleries, when a group is created you know have the option to add a gallery. The gallery is accessible from within the group and all group members can view and contribute to the gallery.
+
+= 1.2.5 = 
+* "Addresses issues caused the global update of JQuery yesterday (January 15th). Fancybox updated to version v2.1.4"
 
 == Upgrade Notice ==
 = 1.0 =
@@ -104,7 +122,9 @@ Admins can edit users albums and images. Image edit now possible from the Image 
 "Added support for new Wordpress image handling introduced in 3.5. Fixed other 3.5 compatibility issues. Backwardly compatible with previosu version of wordpress. Fixed issue where album changes not saved in Edit Album"
 = 1.2.4 = 
 "Added Group galleries, when a group is created you know have the option to add a gallery. The gallery is accessible from within the group and all group members can view and contribute to the gallery.
+= 1.2.5 = 
+"This upgrade is required to support the latest jQuery update (15th Jan 2013)"
 
 == Help Out! ==
 
-If you want to help out, you can send some cash over [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YSM3KMT3B5AQE).
+

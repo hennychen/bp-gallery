@@ -87,6 +87,7 @@ function bp_gallplus_setup_globals() {
         $bp->album->bp_gallplus_per_page = get_site_option( 'bp_gallplus_per_page' );
 	$bp->album->bp_gallplus_url_remap = get_site_option( 'bp_gallplus_url_remap' );
 	$bp->album->bp_gallplus_base_url = get_site_option( 'bp_gallplus_base_url' );
+	$bp->album->bp_gallplus_keep_files = get_site_option('bp_gallplus_keep_files');
 
 	$bp->active_components[$bp->album->slug] = $bp->album->id;
 	
@@ -867,9 +868,12 @@ function bp_gallplus_delete_image($id=false){
 	
 	if(!empty($pic->id)){
 	
-		@unlink($pic->pic_org_path);
-		@unlink($pic->pic_mid_path);
-		@unlink($pic->pic_thumb_path);
+		if(!$bp->album->bp_gallplus_keep_files)
+		{
+			@unlink($pic->pic_org_path);
+			@unlink($pic->pic_mid_path);
+			@unlink($pic->pic_thumb_path);
+		}
 		
 		bp_gallplus_delete_activity( $pic->id );
 		
@@ -1692,7 +1696,27 @@ function bp_gallplus_privacy($album_id=false){
 		return false;
 }
 
-
+function bp_gallplus_member_group_name($user_id = false)
+{
+	global $wpdb, $bp;
+	if(!$user_id)
+	{
+		return false;
+	}
+	$results = BP_Groups_Member::get_group_ids( $user_id ); 
+	$first = true;
+	if($results['total'] > 0)
+	{
+		for($i=0; $i < $results['total']; $i++)
+		{
+			$group_id = $results['groups'][$i];
+			$group = new BP_Groups_Group( $group_id, true );
+			$groups_array[] = array('name' => $group->name,'id' => $group_id);
+		}
+		return array( 'groups' => $groups_array);
+	}
+	return false;	
+}
 
 function bp_gallplus_member_groups($user_id = false)
 {	

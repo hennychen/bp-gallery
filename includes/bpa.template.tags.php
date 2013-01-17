@@ -1977,7 +1977,16 @@ function bp_gallplus_get_image_viewer_attribute()
 	$bp_gallplus_viewer = get_option('bp_gallplus_viewer');
 	switch($bp_gallplus_viewer)
 	{
-			case 0: $classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';
+			case 0: if(get_site_option( 'bp_gallplus_use_watermark' ))
+							{
+									// A bit of obfuscation on the id so it is not obviously guessable
+								 $utc_str = gmdate("M d Y", time());
+  							 $utc = strtotime($utc_str);
+								 $token = $utc + intval(bp_gallplus_get_image_id());
+								$classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.BP_GALLPLUS_PLUGIN_URL.'includes/bpa.large.img.php?token='.base64_encode($token).'" data-fancybox-image-id="'.bp_gallplus_get_image_id().'"';
+							}
+							else
+								$classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';
 							break;
 			case 1: $classStr = 'class="thickbox"';
 							break;

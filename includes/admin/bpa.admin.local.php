@@ -51,6 +51,9 @@ function bp_gallplus_admin() {
 			update_site_option( 'bp_gallplus_base_url', $_POST['bp_gallplus_base_url'] );
 			update_site_option( 'bp_gallplus_viewer', $_POST['bp_gallplus_viewer'] );
 			update_site_option( 'bp_gallplus_mid_size', $_POST['bp_gallplus_mid_size'] );
+			update_site_option( 'bp_gallplus_use_watermark', $_POST['bp_gallplus_use_watermark'] );
+			update_site_option( 'bp_gallplus_watermark_text', $_POST['bp_gallplus_watermark_text'] );
+			update_site_option( 'bp_gallplus_keep_files', $_POST['bp_gallplus_keep_files'] );
 
 
 			$updated = true;
@@ -94,6 +97,10 @@ function bp_gallplus_admin() {
 				$bp_gallplus_mid_size = get_option('bp_gallplus_mid_size');
 				$bp_gallplus_rebuild_activity = false;
 				$bp_gallplus_undo_rebuild_activity = false;
+				$bp_gallplus_use_watermark = get_site_option( 'bp_gallplus_use_watermark');
+				$bp_gallplus_watermark_text = get_site_option( 'bp_gallplus_watermark_text');
+				$bp_gallplus_keep_files = get_site_option( 'bp_gallplus_keep_files');
+				
 
 	?>
 	<div class="wrap">
@@ -254,8 +261,22 @@ function bp_gallplus_admin() {
 							<small><?php _e('Enabling this option will, force the image viewer to load the mid size image instead of the large, which can speed up load time.') ?></small></label>
 						</td>
 				</tr>
+				<tr>
+					<th scope="row"><label for="target_uri"><?php _e('Use Text Watermark') ?></label></th>
+						<td>
+							<label><input name="bp_gallplus_use_watermark" type="checkbox" value="1" <?php if($bp_gallplus_use_watermark) echo 'checked'; ?> />
+							<small><?php _e('Enabling this option will, force place a text watermark on large images when they are viewed. This will only work with the Fancybox viewer') ?></small></label>
+						</td>
+				</tr>
+					<tr valign="top">
+					<th scope="row"><label for="target_uri"><?php _e('Watermark Text', 'bp-galleries-plus' ) ?></label></th>
+					<td>
+						<input name="bp_gallplus_watermark_text" type="text" id="bp_gallplus_watermark_text" value="<?php echo esc_attr($bp_gallplus_watermark_text ); ?>" size="80" />
+						<small><?php _e('Enter the text you would like to appear in the watermark.') ?></small></label>
+					</td>
+				</tr>
 			</table>
-			<h3><?php _e('Image Size Limits', 'bp-galleries-plus' ) ?></h3>
+			<h3><?php _e('Image Settings', 'bp-galleries-plus' ) ?></h3>
 
 			<p>
 			<?php _e( "Uploaded images will be re-sized to the values you set here. Values are for both X and Y size in pixels. We <i>strongly</i> suggest you keep the original image files so you can re-render your images during the upgrade process.", 'bp-galleries-plus' ) ?>
@@ -287,7 +308,13 @@ function bp_gallplus_admin() {
 						<input type="radio" name="bp_gallplus_keep_original" type="text" id="bp_gallplus_keep_original"<?php if ($bp_gallplus_keep_original == false) : ?> checked="checked"<?php endif; ?> id="bp-disable-account-deletion" value="0" /> <?php _e( 'No', 'bp-galleries-plus' ) ?>
 					</td>
 				</tr>
-
+				<tr>
+					<th scope="row"><label for="target_uri"><?php _e('Keep files after deletion') ?></label></th>
+						<td>
+							<label><input name="bp_gallplus_keep_files" type="checkbox" value="1" <?php if($bp_gallplus_keep_files) echo 'checked'; ?> />
+							<small><?php _e('Enabling this option will stop the image files from being deleted when a user deletes an album or image, only table entries will be removed.') ?></small></label>
+						</td>
+				</tr>
 			</table>
 
 			<h3><?php _e('Image URL Mapping', 'bp-galleries-plus' ) ?></h3>
@@ -339,14 +366,8 @@ function bpg_info_box() {
 			<li><a href="http://www.amkd.com.au/wordpress/bp-gallery-plugin/98">BP Gallery Plus Home</a></li>
 			<!--  li><a href="http://wordpress.org/tags/fotobook?forum_id=10">Support Forum</a></li -->
 			<li><a href="http://www.fatcow.com/join/index.bml?AffID=642780">Host your Web site with FatCow!</a></li>
-			<li><a href="http://www.amkd.com.au/">Need someone to build your web site?</a></li>
+			<li><a href="http://www.amkd.com.au/">Need someone to build your web site, or write a plugin?</a></li>
 		</ul>
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-			<input type="hidden" name="cmd" value="_s-xclick">
-			<input type="hidden" name="hosted_button_id" value="YSM3KMT3B5AQE">
-			<input type="image" src="https://www.paypalobjects.com/en_AU/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal — The safer, easier way to pay online.">
-			<img alt="" border="0" src="https://www.paypalobjects.com/en_AU/i/scr/pixel.gif" width="1" height="1">
-		</form>
 	</div>
 <?php
 }

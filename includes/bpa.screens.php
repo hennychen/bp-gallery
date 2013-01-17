@@ -1369,8 +1369,9 @@ function bp_gallplus_screen_visibility($group_id = 0,$image_edit = false){
 	echo"</label>\n";
 
 	$checked=false;
-	$groups_array = BP_Groups_Member::get_is_admin_of($owner_id);
-	$group_count = $groups_array['total'];
+	$groups_array = bp_gallplus_member_group_name($owner_id); //BP_Groups_Member::get_is_admin_of($owner_id);
+	bp_logdebug('bp_gallplus_screen_visibility : '.print_r($groups_array,true));
+	$group_count = count($groups_array);
 	if($image_edit)
 	{
 		$privacy = bp_gallplus_get_image_priv();
@@ -1387,37 +1388,44 @@ function bp_gallplus_screen_visibility($group_id = 0,$image_edit = false){
 				$checked = true;
 			}
 		}
-		if($k == 3)
+		if($privacy == 5)
 		{
-			if ($group_count == 0) // Only add group privacy if member has groups
-			{
-				echo 'disabled="disabled" />'.$str;
-			}											
-			else
-			{
-				echo '/>'.$str;
-				echo "\n<label>";
-				_e('Select Group', 'bp-galleries-plus' );
-				echo "\n".'	<SELECT NAME="selected_group" id="selected_group">'."\n";
-				foreach( $groups_array['groups'] as $group)
-				{
-					if(($group_id > 0) && ($group->id == $group_id))
-					{
-						echo '<OPTION selected="selected" VALUE="'.$group->id.'">'.$group->name."\n";
-					}
-					else
-					{
-						echo '<OPTION VALUE="'.$group->id.'">'.$group->name."\n";
-					}
-				}
-				echo "</SELECT>\n<br />";
-				echo "</label>\n";
-
-			}
+			echo 'disabled="disabled" />'.$str;
 		}
 		else
 		{
-			echo '/>'.$str;
+			if($k == 3)
+			{
+				if ($group_count == 0) // Only add group privacy if member has groups
+				{
+					echo 'disabled="disabled" />'.$str;
+				}											
+				else
+				{
+					echo '/>'.$str;
+					echo "\n<label>";
+					_e('Select Group', 'bp-galleries-plus' );
+					echo "\n".'	<SELECT NAME="selected_group" id="selected_group">'."\n";
+					foreach( $groups_array['groups'] as $group)
+					{
+						if(($group_id > 0) && ($group['id'] == $group_id))
+						{
+							echo '<OPTION selected="selected" VALUE="'.$group['id'].'">'.$group['name']."\n";
+						}
+						else
+						{
+							echo '<OPTION VALUE="'.$group['id'].'">'.$group['name']."\n";
+						}
+					}
+					echo "</SELECT>\n<br />";
+					echo "</label>\n";
+
+				}
+			}
+			else
+			{
+				echo '/>'.$str;
+			}
 		}
 		echo "\n</label></p>\n";
 

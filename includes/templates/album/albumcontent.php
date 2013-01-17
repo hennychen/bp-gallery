@@ -55,22 +55,7 @@
 						<?php while ( bp_gallplus_has_images() ) : bp_gallplus_the_image(); ?>
 
 							<div class="image-thumb-box">
-									<?php 
-										$bp_gallplus_viewer = get_option('bp_gallplus_viewer');
-										switch($bp_gallplus_viewer)
-										{
-											case 0: $classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';
-															break;
-											case 1: $classStr = 'class="thickbox"';
-															break;
-											case 2: $classStr = ''; // colorbox is automatic
-															break;
-											case 3: $classStr = 'rel="lightbox"';
-															break;
-											default: $classStr = 'class="fancybox" data-fancybox-group="gallery" data-fancybox-large="'.bp_gallplus_get_image_url().'"';																									
-										}
-									?>
-	                <a href="<?php get_option('bp_gallplus_mid_size') ? bp_gallplus_image_mid_url() : bp_gallplus_image_url() ?>" <? echo $classStr ?>><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
+            		<a href="<?php get_option('bp_gallplus_mid_size') ? bp_gallplus_image_mid_url() : bp_gallplus_image_url() ?>" <?php bp_gallplus_image_viewer_attribute() ?>><img src='<?php bp_gallplus_image_thumb_url() ?>' /></a>
 	                <!-- a href="<?php bp_gallplus_image_url() ?>"  class="image-title"><?php bp_gallplus_image_title_truncate() ?></a -->	
 	                <?php if (bp_is_my_profile() || is_super_admin()) : ?>
 										<div class="block-core-ItemLinks">
